@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class professor extends user {
     private String name;
-    private ArrayList<courses> courses_under;
+    private ArrayList<courses> courses_under = new ArrayList<courses>();
     Scanner sc = new Scanner (System.in);
 
     public professor(String email, String password, String name){
@@ -25,6 +25,16 @@ public class professor extends user {
             }
         }
     }
+    public void view_courses(ArrayList<courses> arr){
+        if (arr == null){
+            System.out.println("There are no courses under this prof.");
+            return;
+        }
+        for (courses c: arr){
+                System.out.print(c.getcourse_name() + " - " + c.getcourse_code() + " - " +  c.getsyllabus());
+        }
+    }
+
     public void update_timings(ArrayList<courses> arr, String name){
         if (arr == null){
             System.out.println("There are no courses under this prof.");
@@ -34,6 +44,22 @@ public class professor extends user {
             if (c.getcourse_name().equals(name)){
                 System.out.print("Enter the slot number you want to change the selected course to: ");
                 c.setslot(sc.nextInt());
+            }
+        }
+    }
+    public void update_days(ArrayList<courses> arr, String name){
+        if (arr == null){
+            System.out.println("There are no courses under this prof.");
+            return;
+        }
+        for (courses c: arr){
+            if (c.getcourse_name().equals(name)){
+                System.out.println("These are the original days of the course: ");
+                System.out.println(c.getdays());
+                System.out.print("Enter the 2 days which you want to put for your course: ");
+                for(int i = 0; i<2; i++){
+                    c.getdays().set(i, sc.next());
+                }
             }
         }
     }
@@ -90,10 +116,6 @@ public class professor extends user {
                 }
             }
         }
-    }
-
-    public professor(String email, String password) {
-        super(email, password);
     }
 
     public String getName() {

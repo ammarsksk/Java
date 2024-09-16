@@ -13,19 +13,25 @@ public class courses {
     private int semester;
     private String professor_name;
     private String prereqs;
-    private ArrayList<String> days;
+    private ArrayList<String> days = new ArrayList<String>();
     private int slot;
     private String locations;
-    private ArrayList<student> enrolled_students;
+    private ArrayList<student> enrolled_students = new ArrayList<student>();
     private int enrollment_limit;
 
-    public courses(String course_name, String course_code, int semester, String professor_name, int credits, String syllabus) {
+    public courses(String course_name, String course_code, int semester, String professor_name, int credits, String syllabus, String locations, String prereqs,int slot, int enrollment_limit) {
         this.course_name = course_name;
         this.course_code = course_code;
         this.semester = semester;
         this.professor_name = professor_name;
         this.credits = credits;
         this.syllabus = syllabus;
+        this.locations = locations;
+        this.prereqs = prereqs;
+        this.slot = slot;
+        this.enrollment_limit = enrollment_limit;
+
+
     }
 
     public void setlocations(String locations) {
@@ -36,7 +42,8 @@ public class courses {
         this.slot = slot;
     }
 
-    public void setdays(ArrayList<String> days) {
+    public void setdays(ArrayList<String> days, String day) {
+        boolean add = days.add(day);
         this.days = days;
     }
 

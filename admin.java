@@ -61,7 +61,7 @@ public class admin extends user {
         for (student c: arr){
             if (c.getName().equals(name)){
                 for (courses s: c.getCompleted_courses()){
-                    if(s.getcourse_name().equals(name)){
+                    if(s.getcourse_name().equals(course_name)){
                         System.out.println("The GPA of this course is: " + s.getGPA());
                     }
                 }
@@ -72,7 +72,7 @@ public class admin extends user {
         for (student c: arr){
             if (c.getName().equals(name)){
                 for (courses s: c.getCompleted_courses()){
-                    if(s.getcourse_name().equals(name)){
+                    if(s.getcourse_name().equals(course_name)){
                         s.setGPA(sc.nextInt());
                     }
 
@@ -84,7 +84,8 @@ public class admin extends user {
         for (student c: arr){
             if (c.getName().equals(name)){
                 for (courses s: c.getRegistered_courses()){
-                    if(s.getcourse_name().equals(name)){
+                    if(s.getcourse_name().equals(course_name)){
+                        System.out.println("I am here");
                         s.setGPA(sc.nextInt());
                     }
 
@@ -93,28 +94,49 @@ public class admin extends user {
         }
     }
     public void change_semester(ArrayList<student> arr, String name){
-        boolean flag = true;
+        boolean flag = false;
         for (student c: arr){
             if(c.getName().equals(name)){
                 for (courses s: c.getRegistered_courses()){
-                    if (s.ispass_status()){
-                        flag = false;
+                    if (s.ispass_status() || s.getcredits()>=4){
+                        flag = true;
                     }
                 }
                 if (flag){
                     c.setCurrent_semester(c.getCurrent_semester() + 1);
+                    for (courses s: c.getRegistered_courses()){
+                        if(s.getcredits()>=4 || s.ispass_status()){
+                            c.getCompleted_courses().add(s);
+                            c.setCompleted_courses(c.getCompleted_courses());
+                        }
+                    }
                 }
-
+                else{
+                    System.out.println("He cannot be promoted to the next semester! ");
+                }
             }
         }
     }
-    public void assign_professor(ArrayList<courses> arr, courses course){
-        if (arr.size()>=2){
-            System.out.println("Ineligible for any more courses");
+    public void assign_professor(ArrayList<professor> arr, courses course, String name){
+        for (professor p: arr){
+            if(p.getName().equals(name)){
+                if (p.getCourses_under().size()<2){
+                    p.getCourses_under().add(course);
+                    p.setCourses_under(p.getCourses_under());
+                }
+            }
         }
-        else{
-            String c = sc.next();
-            arr.add(course);
+    }
+    public void assign_professor(ArrayList<professor> arr, ArrayList<courses> arr1, String name, String course_name){
+        for (professor p: arr){
+            if(p.getName().equals(name)){
+                for (courses c: arr1){
+                    if (c.getcourse_name().equals(course_name)){
+                        p.getCourses_under().add(c);
+                        p.setCourses_under(p.getCourses_under());
+                    }
+                }
+            }
         }
     }
 

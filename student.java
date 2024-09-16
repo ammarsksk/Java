@@ -11,9 +11,9 @@ public class student extends user implements course_catalog{
     private boolean status;
     private String Complaint;
 
-    private ArrayList<courses> all_courses_taken;
-    private ArrayList<courses> registered_courses;
-    private ArrayList<courses> completed_courses;
+    private ArrayList<courses> all_courses_taken = new ArrayList<courses>();
+    private ArrayList<courses> registered_courses = new ArrayList<courses>();;
+    private ArrayList<courses> completed_courses = new ArrayList<courses>();;
 
     public student(String email, String password, String name, int roll_no){
         super(email, password);
@@ -27,6 +27,7 @@ public class student extends user implements course_catalog{
         if (arr == null){
             System.out.println("There is no CGPA to be calculated, as there are no completed courses. ");
         }
+        assert arr != null;
         for(courses c: arr){
             if(c.getsemester() == 1){
                 sem1_sgpa += c.getGPA();
@@ -57,7 +58,7 @@ public class student extends user implements course_catalog{
     public boolean has_passed(ArrayList<courses> arr, String name){
         boolean pass = Objects.equals(name, "NULL");
         for (courses c : arr){
-            if (c.getcourse_name().equals(name) && c.ispass_status()){
+            if (c.getcourse_name().equals(name) && (c.ispass_status() || c.getcredits()>=4)){
                 pass = true;
             }
         }
@@ -76,7 +77,7 @@ public class student extends user implements course_catalog{
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
     public void calculateSGPA(ArrayList<courses> arr, int semester){
-        int sgpa = 0;
+        float sgpa = 0;
         int num = 0;
         for (courses c : arr){
             if (c.getsemester() == semester){
@@ -100,8 +101,6 @@ public class student extends user implements course_catalog{
         for (courses c : arr){
             if (c.getsemester() == semester){
                 System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
-            } else if (c.getsemester() != semester) {
-                System.out.println("This course is available to repeat or to clear backlog: " + c.getcourse_name());
             }
         }
     }
