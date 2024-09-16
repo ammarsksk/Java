@@ -13,13 +13,6 @@ public class admin extends user {
             System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
         }
     }
-    public void make_completed_courses(ArrayList<courses> arr){
-        for (courses c: arr){
-            if (c.ispass_status()){
-                arr.add(c);
-            }
-        }
-    }
     public void add_course_catalog(ArrayList<courses> arr, courses course){
         arr.add(course);
     }
@@ -37,13 +30,13 @@ public class admin extends user {
         for (student c: arr){
             if (c.getName().equals(name)){
                 if (n==1){
-                    c.setName(sc.nextLine());
+                    c.setName(sc.next());
                 }
                 if (n==2){
-                    c.setEmail(sc.nextLine());
+                    c.setEmail(sc.next());
                 }
                 if (n==3){
-                    c.setPassword(sc.nextLine());
+                    c.setPassword(sc.next());
                 }
                 if(n==4){
                     c.setRoll_no(sc.nextInt());
@@ -54,36 +47,65 @@ public class admin extends user {
             }
         }
     }
-    public void get_grades(ArrayList<courses> arr){
-        for (courses c: arr){
-            System.out.println(c.getGPA());
-        }
-    }
-    public void change_grades(ArrayList<courses> arr, String name){
-        for (courses c: arr){
-            if (c.getcourse_name().equals(name)){
-                c.setGPA(sc.nextInt());
+    public void get_CGPA_SGPA(ArrayList<student> arr, String name, int semester){
+        for (student c: arr){
+            if (c.getName().equals(name)){
+                System.out.println("The SGPA of the student is: ");
+                c.calculateSGPA(c.getAll_courses_taken(), semester);
+                System.out.println("The CGPA of the student is: ");
+                c.calculateCGPA(c.getCompleted_courses());
             }
         }
     }
-    public void change_semester(int semester, ArrayList<courses> arr){
+    public void get_grades(ArrayList<student> arr, String name, String course_name){
+        for (student c: arr){
+            if (c.getName().equals(name)){
+                for (courses s: c.getCompleted_courses()){
+                    if(s.getcourse_name().equals(name)){
+                        System.out.println("The GPA of this course is: " + s.getGPA());
+                    }
+                }
+            }
+        }
+    }
+    public void change_completed_grades(ArrayList<student> arr, String name, String course_name){
+        for (student c: arr){
+            if (c.getName().equals(name)){
+                for (courses s: c.getCompleted_courses()){
+                    if(s.getcourse_name().equals(name)){
+                        s.setGPA(sc.nextInt());
+                    }
+
+                }
+            }
+        }
+    }
+    public void set_grades(ArrayList<student> arr, String name, String course_name){
+        for (student c: arr){
+            if (c.getName().equals(name)){
+                for (courses s: c.getRegistered_courses()){
+                    if(s.getcourse_name().equals(name)){
+                        s.setGPA(sc.nextInt());
+                    }
+
+                }
+            }
+        }
+    }
+    public void change_semester(ArrayList<student> arr, String name){
         boolean flag = true;
-        for (courses c: arr){
-            if (c.getsemester() == semester){
-                if (c.ispass_status()){
-                    flag = true;
+        for (student c: arr){
+            if(c.getName().equals(name)){
+                for (courses s: c.getRegistered_courses()){
+                    if (s.ispass_status()){
+                        flag = false;
+                    }
                 }
-                else{
-                    flag = false;
+                if (flag){
+                    c.setCurrent_semester(c.getCurrent_semester() + 1);
                 }
+
             }
-        }
-        if (flag){
-            semester++;
-            System.out.println("Promoted to the next semester.");
-        }
-        else{
-            System.out.println("Couldn't promote to the net semester!");
         }
     }
     public void assign_professor(ArrayList<courses> arr, courses course){

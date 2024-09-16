@@ -7,10 +7,11 @@ public class student extends user implements course_catalog{
     Scanner sc = new Scanner (System.in);
     private String name;
     private int roll_no;
-    private int current_semester;
+    private int current_semester = 1; // DEFAULT VALUE
     private boolean status;
     private String Complaint;
 
+    private ArrayList<courses> all_courses_taken;
     private ArrayList<courses> registered_courses;
     private ArrayList<courses> completed_courses;
 
@@ -23,7 +24,7 @@ public class student extends user implements course_catalog{
     public void calculateCGPA(ArrayList<courses> arr){
         int sem1_sgpa = 0; int sem2_sgpa = 0; int cgpa = 0;
         int num1 = 0; int num2 = 0;
-        if (arr.isEmpty()){
+        if (arr == null){
             System.out.println("There is no CGPA to be calculated, as there are no completed courses. ");
         }
         for(courses c: arr){
@@ -140,7 +141,7 @@ public class student extends user implements course_catalog{
         }
     }
     public void getregisteredcourses(ArrayList<courses> arr){
-        if (arr.isEmpty()){
+        if (arr == null){
             System.out.println("There are no registered courses!");
         }
         else{
@@ -203,5 +204,13 @@ public class student extends user implements course_catalog{
 
     public void setComplaint(String complaint) {
         Complaint = complaint;
+    }
+
+    public ArrayList<courses> getAll_courses_taken() {
+        return all_courses_taken;
+    }
+
+    public void setAll_courses_taken(ArrayList<courses> all_courses_taken) {
+        this.all_courses_taken = all_courses_taken;
     }
 }
