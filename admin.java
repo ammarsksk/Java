@@ -73,6 +73,7 @@ public class admin extends user {
         }
         if (flag){
             semester++;
+            System.out.println("Promoted to the next semester.");
         }
         else{
             System.out.println("Couldn't promote to the net semester!");

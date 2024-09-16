@@ -5,8 +5,9 @@ public class student extends user implements course_catalog{
     private String name;
     private int roll_no;
     private int current_semester;
-    private boolean complaint;
+    private boolean status;
     private String Complaint;
+
     private ArrayList<courses> registered_courses;
     private ArrayList<courses> completed_courses;
 
@@ -180,12 +181,12 @@ public class student extends user implements course_catalog{
         this.roll_no = roll_no;
     }
 
-    public boolean isComplaint() {
-        return complaint;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setComplaint(boolean complaint) {
-        this.complaint = complaint;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getComplaint() {
