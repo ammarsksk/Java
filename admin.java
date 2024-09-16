@@ -13,6 +13,13 @@ public class admin extends user {
             System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
         }
     }
+    public void make_completed_courses(ArrayList<courses> arr){
+        for (courses c: arr){
+            if (c.ispass_status()){
+                arr.add(c);
+            }
+        }
+    }
     public void add_course_catalog(ArrayList<courses> arr, courses course){
         arr.add(course);
     }

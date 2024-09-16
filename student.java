@@ -1,7 +1,10 @@
 package Java;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class student extends user implements course_catalog{
+    Scanner sc = new Scanner (System.in);
     private String name;
     private int roll_no;
     private int current_semester;
@@ -17,9 +20,12 @@ public class student extends user implements course_catalog{
         this.roll_no = roll_no;
     }
 
-    public void calculateCGPA(ArrayList<courses> arr, int semester){
+    public void calculateCGPA(ArrayList<courses> arr){
         int sem1_sgpa = 0; int sem2_sgpa = 0; int cgpa = 0;
         int num1 = 0; int num2 = 0;
+        if (arr.isEmpty()){
+            System.out.println("There is no CGPA to be calculated, as there are no completed courses. ");
+        }
         for(courses c: arr){
             if(c.getsemester() == 1){
                 sem1_sgpa += c.getGPA();
@@ -34,23 +40,21 @@ public class student extends user implements course_catalog{
         cgpa = (sem1_sgpa + sem2_sgpa)/2;
         System.out.println(cgpa);
     }
-    public void make_completed_courses(ArrayList<courses> arr){
-        for (courses c: arr){
-            if (c.ispass_status()){
-                arr.add(c);
-            }
-        }
-    }
 
     public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, int semester){
         for (courses c: arr1){
             if (c.getsemester() == semester && has_passed(arr1, c.getprereqs())){
-                arr2.add(c);
+                System.out.println("This is a course which you can apply for: " + c.getcourse_name());
+                System.out.print("Enter y or n --> y to apply, n to reject: ");
+                String f = sc.next();
+                if (Objects.equals(f, "y")){
+                    arr2.add(c);
+                }
             }
         }
     }
     public boolean has_passed(ArrayList<courses> arr, String name){
-        boolean pass = false;
+        boolean pass = Objects.equals(name, "NULL");
         for (courses c : arr){
             if (c.getcourse_name().equals(name) && c.ispass_status()){
                 pass = true;
@@ -136,11 +140,15 @@ public class student extends user implements course_catalog{
         }
     }
     public void getregisteredcourses(ArrayList<courses> arr){
-        for (courses c : arr){
-            System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
+        if (arr.isEmpty()){
+            System.out.println("There are no registered courses!");
+        }
+        else{
+            for (courses c : arr){
+                System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
+            }
         }
     }
-
     public ArrayList<courses> getCompleted_courses() {
         return completed_courses;
     }

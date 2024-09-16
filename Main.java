@@ -1,5 +1,4 @@
 package Java;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -65,7 +64,68 @@ public class Main {
                     for (student c: total_students){
                         if (c.getEmail().equals(eml) && c.getPassword().equals(passw)){
                             System.out.println("You have logged in!");
-                            System.out.println("Enter --> \n1) ");
+                            System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course)");
+                            int s = sc.nextInt();
+                            if(s==1){
+                                c.getregisteredcourses(c.getRegistered_courses());
+                            }
+                            else if(s==2){
+                                c.getavailablecourses(available_courses, c.getCurrent_semester());
+                                System.out.println();
+                            }
+                            else if(s==3){
+                                c.calculateCGPA(c.getCompleted_courses());
+                                System.out.println();
+                            }
+                            else if(s==4){
+                                System.out.print("Enter the current semester number: ");
+                                int d = sc.nextInt();
+                                if (d == c.getCurrent_semester()){
+                                    System.out.println("Cannot calculate SGPA as semester is ongoing");
+                                }
+                                else{
+                                    c.calculateSGPA(c.getCompleted_courses(), d);
+                                }
+                                System.out.println();
+                            }
+                            else if(s==5){
+                                System.out.print("Enter the current semester number: ");
+                                int d = sc.nextInt();
+                                c.make_registered_courses(available_courses, c.getRegistered_courses(), d);
+                                System.out.println();
+                            }
+                            else if(s==6){
+                                System.out.println("Drop options are -->: ");
+                                System.out.println(c.getRegistered_courses());
+                                System.out.print("Enter name: ");
+                                String h = sc.next();
+                                c.dropcourses(c.getRegistered_courses(),h);
+                            }
+                            else if(s==7){
+                                System.out.print("Enter course name: ");
+                                String h = sc.next();
+                                c.getcoursecode(c.getRegistered_courses(),h);
+                            }
+                            else if(s==8){
+                                System.out.print("Enter course name: ");
+                                String h = sc.next();
+                                c.getprofname(c.getRegistered_courses(),h);
+                            }
+                            else if(s==9){
+                                System.out.print("Enter course name: ");
+                                String h = sc.next();
+                                c.getcoursecredits(c.getRegistered_courses(),h);
+                            }
+                            else if(s==10){
+                                System.out.print("Enter course name: ");
+                                String h = sc.next();
+                                c.getcourseprereqs(c.getRegistered_courses(),h);
+                            }
+                            else if(s==11){
+                                System.out.print("Enter course name: ");
+                                String h = sc.next();
+                                c.getweeklyschedule(c.getRegistered_courses(),h);
+                            }
                         }
                     }
                 }
@@ -169,8 +229,6 @@ public class Main {
                 System.out.println("Please Enter the correct command! ");
             }
         }
-
-
 
     }
 }
