@@ -79,7 +79,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")){
-                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus.");
+                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status");
                                     int s = sc.nextInt();
                                     if(s==1){
                                         c.getregisteredcourses(c.getRegistered_courses());
@@ -137,7 +137,7 @@ public class Main {
                                     else if(s==11){
                                         System.out.print("Enter course name: ");
                                         String h = sc.next();
-                                        c.getweeklyschedule(c.getRegistered_courses(),h);
+                                        c.get_weekly_schedule(c.getRegistered_courses(),h);
                                     }
                                     else if(s==12){
                                         System.out.println(c.getCurrent_semester());
@@ -150,6 +150,12 @@ public class Main {
                                         System.out.print("Enter course name: ");
                                         String h = sc.next();
                                         c.get_course_syllabus(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==15){
+                                        c.set_complaint(c.getStudent_complaints());
+                                    }
+                                    else if(s==16){
+                                        c.view_complaints(c.getStudent_complaints());
                                     }
                                 }
                                 else{
@@ -233,7 +239,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9) Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor.");
+                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9) Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor. \n12)View the complaints for a student (in sorted order - oldest --> newest). \n13)Resolution for all the complaints of a student. \n14)Delete the complaints (after resolution)");
                                     int s = sc.nextInt();
                                     if (s==1){
                                         c.view_course_catalog(available_courses);
@@ -332,6 +338,22 @@ public class Main {
                                             String g = sc.next();
                                             c.assign_professor(total_professors, available_courses, h, g);
                                         }
+                                    }
+                                    else if (s==12){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        c.sort_complaints(total_students, h);
+                                        c.view_complaint(total_students, h);
+                                    }
+                                    else if(s==13){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        c.resolution(total_students, h);
+                                    }
+                                    else if (s==14){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        c.delete_student_complaints(total_students, h);
                                     }
                                 }
                                 else {

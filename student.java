@@ -1,5 +1,4 @@
 package Java;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -9,9 +8,8 @@ public class student extends user implements course_catalog{
     private String name;
     private int roll_no;
     private int current_semester = 1; // DEFAULT VALUE
-    private boolean status = false;
-    private String Complaint;
 
+    private ArrayList<complaints> student_complaints = new ArrayList<complaints>();;
     private ArrayList<courses> completed_backlog_courses = new ArrayList<courses>();;
     private ArrayList<courses> registered_courses = new ArrayList<courses>();;
     private ArrayList<courses> completed_courses = new ArrayList<courses>();;
@@ -21,6 +19,7 @@ public class student extends user implements course_catalog{
         this.name = name;
         this.roll_no = roll_no;
     }
+
     public void get_completed_records(ArrayList<courses> arr){
         if(arr.isEmpty()){
             System.out.println("There are no passed courses! ");
@@ -112,7 +111,7 @@ public class student extends user implements course_catalog{
         }
         return pass;
     }
-    public void getweeklyschedule(ArrayList<courses> arr, String name){
+    public void get_weekly_schedule(ArrayList<courses> arr, String name){
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
                 System.out.println("The days are: " + c.getdays());
@@ -197,6 +196,24 @@ public class student extends user implements course_catalog{
             }
         }
     }
+    public void set_complaint(ArrayList<complaints> arr){
+        System.out.println("Enter the complaint that you have");
+        String a = sc.nextLine();
+        complaints complaint = new complaints(a);
+        arr.add(complaint);
+    }
+
+    public void view_complaints(ArrayList<complaints> arr){
+        if (arr.isEmpty()){
+            System.out.println("There are no complaints from you. ");
+        }
+        else {
+            for (complaints c : arr) {
+                System.out.println(c.getComplaint() + " - " + c.getDateTime());
+            }
+        }
+    }
+
     public ArrayList<courses> getCompleted_courses() {
         return completed_courses;
     }
@@ -237,27 +254,19 @@ public class student extends user implements course_catalog{
         this.roll_no = roll_no;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getComplaint() {
-        return Complaint;
-    }
-
-    public void setComplaint(String complaint) {
-        Complaint = complaint;
-    }
-
     public ArrayList<courses> getCompleted_backlog_courses() {
         return completed_backlog_courses;
     }
 
     public void setCompleted_backlog_courses(ArrayList<courses> completed_backlog_courses) {
         this.completed_backlog_courses = completed_backlog_courses;
+    }
+
+    public ArrayList<complaints> getStudent_complaints() {
+        return student_complaints;
+    }
+
+    public void setStudent_complaints(ArrayList<complaints> student_complaints) {
+        this.student_complaints = student_complaints;
     }
 }

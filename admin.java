@@ -1,5 +1,7 @@
 package Java;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class admin extends user {
@@ -199,4 +201,58 @@ public class admin extends user {
         }
     }
 
+    public void view_complaint(ArrayList<student> arr, String name){
+        for (student s: arr){
+            if (s.getName().equals(name)){
+                if (s.getStudent_complaints().isEmpty()){
+                    System.out.println("There are no complaints from this student. ");
+                }
+                else{
+                    for (complaints c: s.getStudent_complaints()){
+                        System.out.println(c.getComplaint() + " - " + c.getDateTime());
+
+                    }
+                }
+            }
+        }
+    }
+
+    public void resolution (ArrayList<student> arr, String name){
+        for (student s: arr) {
+            if (s.getName().equals(name)) {
+                if (s.getStudent_complaints().isEmpty()) {
+                    System.out.println("There are no complaints from this student. ");
+                }
+                else {
+                    for (complaints c : s.getStudent_complaints()) {
+                        c.setStatus("Resolved");
+                    }
+                }
+            }
+        }
+    }
+    public void delete_student_complaints(ArrayList<student> arr, String name){
+        for (student s: arr) {
+            if (s.getName().equals(name)) {
+                if (s.getStudent_complaints().isEmpty()) {
+                    System.out.println("There are no complaints from this student. ");
+                }
+                else {
+                    s.getStudent_complaints().removeIf(d -> Objects.equals(d.getStatus(), "Resolved"));
+                }
+            }
+        }
+    }
+    public void sort_complaints(ArrayList<student> arr, String name){
+        for (student s: arr) {
+            if (s.getName().equals(name)) {
+                s.getStudent_complaints().sort(new Comparator<complaints>() {
+                    @Override
+                    public int compare(complaints c1, complaints c2) {
+                        return c1.getDateTime().compareTo(c2.getDateTime());
+                    }
+                });
+            }
+        }
+    }
 }
