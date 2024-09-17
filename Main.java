@@ -79,7 +79,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")){
-                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course)");
+                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on");
                                     int s = sc.nextInt();
                                     if(s==1){
                                         c.getregisteredcourses(c.getRegistered_courses());
@@ -89,7 +89,7 @@ public class Main {
                                         System.out.println();
                                     }
                                     else if(s==3){
-                                        c.calculateCGPA(c.getCompleted_courses());
+                                        c.calculateCGPA(c.getCompleted_courses(), c.getCurrent_semester());
                                         System.out.println();
                                     }
                                     else if(s==4){
@@ -102,14 +102,14 @@ public class Main {
                                         System.out.println();
                                     }
                                     else if(s==5){
-                                        System.out.print("Enter the current semester number: ");
-                                        int d = sc.nextInt();
-                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), d);
+                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c.getCurrent_semester());
                                         System.out.println();
                                     }
                                     else if(s==6){
                                         System.out.println("Drop options are -->: ");
-                                        System.out.println(c.getRegistered_courses());
+                                        for(courses o: c.getRegistered_courses()){
+                                            System.out.println(o.getcourse_name());
+                                        }
                                         System.out.print("Enter name: ");
                                         String h = sc.next();
                                         c.dropcourses(c.getRegistered_courses(),h);
@@ -138,6 +138,9 @@ public class Main {
                                         System.out.print("Enter course name: ");
                                         String h = sc.next();
                                         c.getweeklyschedule(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==12){
+                                        System.out.println(c.getCurrent_semester());
                                     }
                                 }
                                 else{
@@ -280,6 +283,7 @@ public class Main {
                                         System.out.print("Enter the course name: ");
                                         String r = sc.next();
                                         c.change_completed_grades(total_students, h, r);
+                                        c.renew_grades_lists(total_students, h);
                                     }
                                     else if (s==9){
                                         System.out.print("Enter the name of the student: ");

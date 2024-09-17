@@ -8,10 +8,10 @@ public class student extends user implements course_catalog{
     private String name;
     private int roll_no;
     private int current_semester = 1; // DEFAULT VALUE
-    private boolean status;
+    private boolean status = false;
     private String Complaint;
 
-    private ArrayList<courses> all_courses_taken = new ArrayList<courses>();
+    private ArrayList<courses> completed_backlog_courses = new ArrayList<courses>();;
     private ArrayList<courses> registered_courses = new ArrayList<courses>();;
     private ArrayList<courses> completed_courses = new ArrayList<courses>();;
 
@@ -20,32 +20,39 @@ public class student extends user implements course_catalog{
         this.name = name;
         this.roll_no = roll_no;
     }
-
-    public void calculateCGPA(ArrayList<courses> arr){
-        int sem1_sgpa = 0; int sem2_sgpa = 0; int cgpa = 0;
-        int num1 = 0; int num2 = 0;
+    public void calculateCGPA(ArrayList<courses> arr, int semester){
+        float sgpa = 0; int num= 0;int sem = 1;float cgpa = 0;
         if (arr == null){
             System.out.println("There is no CGPA to be calculated, as there are no completed courses. ");
         }
         assert arr != null;
-        for(courses c: arr){
-            if(c.getsemester() == 1){
-                sem1_sgpa += c.getGPA();
-                num1++;
-            } else if (c.getsemester() == 2) {
-                sem2_sgpa += c.getGPA();
-                num2++;
+        if(semester==1){
+            for(courses c:arr){
+                if(c.getsemester() == semester){
+                    sgpa+=c.getGPA();
+                    num++;
+                }
             }
+            System.out.println("The CGPA is: " + sgpa/num);
+            return;
         }
-        sem1_sgpa = sem1_sgpa/num1;
-        sem2_sgpa = sem2_sgpa/num2;
-        cgpa = (sem1_sgpa + sem2_sgpa)/2;
-        System.out.println(cgpa);
+        while(sem<semester){
+            for(courses c: arr){
+                if (c.getsemester() == sem){
+                    sgpa+=c.getGPA();
+                    num++;
+                }
+            }
+            cgpa+=sgpa/num;
+            sgpa = 0; num = 0;
+            sem++;
+        }
+        System.out.println("The CGPA of the student is: " + cgpa/(sem-1));
     }
 
     public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, int semester){
         for (courses c: arr1){
-            if (c.getsemester() == semester && has_passed(arr1, c.getprereqs())){
+            if (c.getsemester() == semester && has_passed(arr1, c.getprereqs()) && !has_registered(arr2, c.getcourse_name())){
                 System.out.println("This is a course which you can apply for: " + c.getcourse_name());
                 System.out.print("Enter y or n --> y to apply, n to reject: ");
                 String f = sc.next();
@@ -53,7 +60,19 @@ public class student extends user implements course_catalog{
                     arr2.add(c);
                 }
             }
+            else{
+                System.out.println("The prereqs haven't been cleared or it has already been registered! ");
+            }
         }
+    }
+    public boolean has_registered(ArrayList<courses> arr, String name){
+        boolean flag = false;
+        for (courses c: arr){
+            if(c.getcourse_name().equals(name)){
+                flag = true;
+            }
+        }
+        return flag;
     }
     public boolean has_passed(ArrayList<courses> arr, String name){
         boolean pass = Objects.equals(name, "NULL");
@@ -205,11 +224,11 @@ public class student extends user implements course_catalog{
         Complaint = complaint;
     }
 
-    public ArrayList<courses> getAll_courses_taken() {
-        return all_courses_taken;
+    public ArrayList<courses> getCompleted_backlog_courses() {
+        return completed_backlog_courses;
     }
 
-    public void setAll_courses_taken(ArrayList<courses> all_courses_taken) {
-        this.all_courses_taken = all_courses_taken;
+    public void setCompleted_backlog_courses(ArrayList<courses> completed_backlog_courses) {
+        this.completed_backlog_courses = completed_backlog_courses;
     }
 }

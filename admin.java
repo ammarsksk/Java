@@ -48,12 +48,29 @@ public class admin extends user {
         }
     }
     public void get_CGPA_SGPA(ArrayList<student> arr, String name, int semester){
+        float sgpa; int sgpa1 = 0; int sgpa2 =0; int num1 = 0; int num2 = 0;
         for (student c: arr){
             if (c.getName().equals(name)){
                 System.out.println("The SGPA of the student is: ");
-                c.calculateSGPA(c.getAll_courses_taken(), semester);
+                if (c.getCompleted_backlog_courses().isEmpty() || c.getCompleted_courses().isEmpty()){
+                    System.out.println("Cannot print CGPA or SGPA since there are no completed courses by this student. ");
+                }
+                for (courses s: c.getCompleted_courses()){
+                    if(s.getsemester() == semester){
+                        sgpa1 += s.getGPA();
+                        num1++;
+                    }
+                }
+                for (courses s: c.getCompleted_backlog_courses()){
+                    if(s.getsemester() == semester){
+                        sgpa2 += s.getGPA();
+                        num2++;
+                    }
+                }
+                sgpa = (float) (sgpa1 + sgpa2) /(num1 + num2);
+                System.out.println(sgpa);
                 System.out.println("The CGPA of the student is: ");
-                c.calculateCGPA(c.getCompleted_courses());
+                c.calculateCGPA(c.getCompleted_courses(), semester);
             }
         }
     }
@@ -71,22 +88,67 @@ public class admin extends user {
     public void change_completed_grades(ArrayList<student> arr, String name, String course_name){
         for (student c: arr){
             if (c.getName().equals(name)){
-                for (courses s: c.getCompleted_courses()){
-                    if(s.getcourse_name().equals(course_name)){
-                        s.setGPA(sc.nextInt());
+                System.out.println("Would you like to change a backlog or update a passed course (1 for backlog, 2 for passed course) --> ");
+                int a = sc.nextInt();
+                if (a==1){
+                    for (courses s: c.getCompleted_backlog_courses()){
+                        if(s.getcourse_name().equals(course_name)){
+                            System.out.println("Enter the new grade: ");
+                            s.setGPA(sc.nextInt());
+                        }
                     }
-
                 }
+                else if (a==2){
+                    for (courses s: c.getCompleted_courses()){
+                        if(s.getcourse_name().equals(course_name)){
+                            System.out.println("Enter the new grade: ");
+                            s.setGPA(sc.nextInt());
+                        }
+                    }
+                }
+
             }
         }
+    }
+    public void renew_grades_lists(ArrayList<student> arr, String name){
+        for (student c: arr){
+            if(c.getName().equals(name)){
+                for (courses s: c.getCompleted_courses()){
+                        if(s.getGPA()<4){
+                            c.getCompleted_backlog_courses().add(s);
+                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
+                    }
+                }
+                c.getCompleted_courses().removeIf(d -> d.getGPA()<4);
+                c.setCompleted_courses(c.getCompleted_courses());
+                for (courses s: c.getCompleted_backlog_courses()){
+                    if(s.getGPA()>=4){
+                        c.getCompleted_courses().add(s);
+                        c.setCompleted_courses(c.getCompleted_courses());
+                    }
+                }
+                c.getCompleted_backlog_courses().removeIf(d -> d.getGPA()>=4);
+                c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
+            }
+        }
+
     }
     public void set_grades(ArrayList<student> arr, String name, String course_name){
         for (student c: arr){
             if (c.getName().equals(name)){
                 for (courses s: c.getRegistered_courses()){
                     if(s.getcourse_name().equals(course_name)){
-                        System.out.println("I am here");
-                        s.setGPA(sc.nextInt());
+                        System.out.println("Enter the GPA of the student --> ");
+                        int a = sc.nextInt();
+                        s.setGPA(a);
+                        if (a>=4){
+                            c.getCompleted_courses().add(s);
+                            c.setCompleted_courses(c.getCompleted_courses());
+                        }
+                        else{
+                            c.getCompleted_backlog_courses().add(s);
+                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
+                        }
                     }
 
                 }
@@ -98,18 +160,25 @@ public class admin extends user {
         for (student c: arr){
             if(c.getName().equals(name)){
                 for (courses s: c.getRegistered_courses()){
-                    if (s.ispass_status() || s.getcredits()>=4){
+                    if (s.getcredits()>=4){
                         flag = true;
                     }
                 }
                 if (flag){
                     c.setCurrent_semester(c.getCurrent_semester() + 1);
+                    System.out.println("The semester has been changed successfully, the current semester is: " + c.getCurrent_semester());
                     for (courses s: c.getRegistered_courses()){
-                        if(s.getcredits()>=4 || s.ispass_status()){
+                        if(s.getcredits()>=4){
                             c.getCompleted_courses().add(s);
                             c.setCompleted_courses(c.getCompleted_courses());
                         }
+                        else{
+                            c.getCompleted_backlog_courses().add(s);
+                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
+                        }
                     }
+                    c.getRegistered_courses().clear();
+                    c.setRegistered_courses(c.getRegistered_courses());
                 }
                 else{
                     System.out.println("He cannot be promoted to the next semester! ");
