@@ -29,12 +29,12 @@ public class student extends user implements course_catalog{
             System.out.println("The completed (passed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + c.getGPA() + " " + c.getcourse_code() + " " + c.getsemester());
         }
     }
-    public void get_completed_backlog_records(ArrayList<courses> arr){
-        if(arr.isEmpty()){
+    public void get_completed_backlog_records(ArrayList<courses> arr) {
+        if (arr.isEmpty()) {
             System.out.println("There are no backlogs! ");
             return;
         }
-        for(courses c: arr){
+        for (courses c : arr) {
             System.out.println("The completed (failed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + c.getGPA() + " " + c.getcourse_code() + " " + c.getsemester());
         }
     }
@@ -105,7 +105,7 @@ public class student extends user implements course_catalog{
     public boolean has_passed(ArrayList<courses> arr, String name){
         boolean pass = Objects.equals(name, "NULL");
         for (courses c : arr){
-            if (c.getcourse_name().equals(name) && (c.ispass_status() || c.getcredits()>=4)){
+            if (c.getcourse_name().equals(name) && (c.getGPA()>=4)){
                 pass = true;
             }
         }
@@ -123,10 +123,19 @@ public class student extends user implements course_catalog{
     public void dropcourses(ArrayList<courses> arr, String name){
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
-    public void calculateSGPA(ArrayList<courses> arr, int semester){
+    public void calculateSGPA(ArrayList<courses> arr1, ArrayList<courses> arr2, int semester){
         float sgpa = 0;
         int num = 0;
-        for (courses c : arr){
+        if(arr1.isEmpty() && arr2.isEmpty()){
+            System.out.println("The SGPA cannot be calculated as there are no completed courses.");
+        }
+        for (courses c : arr1){
+            if (c.getsemester() == semester){
+                num++;
+                sgpa += c.getGPA();
+            }
+        }
+        for (courses c : arr2){
             if (c.getsemester() == semester){
                 num++;
                 sgpa += c.getGPA();
@@ -209,7 +218,7 @@ public class student extends user implements course_catalog{
         }
         else {
             for (complaints c : arr) {
-                System.out.println(c.getComplaint() + " - " + c.getDateTime());
+                System.out.println(c.getComplaint() + " - " + c.getDateTime() + "Status is: " + c.getStatus());
             }
         }
     }

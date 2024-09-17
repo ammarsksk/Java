@@ -209,7 +209,7 @@ public class admin extends user {
                 }
                 else{
                     for (complaints c: s.getStudent_complaints()){
-                        System.out.println(c.getComplaint() + " - " + c.getDateTime());
+                        System.out.println(c.getComplaint() + " - " + c.getDateTime() +  " | Status is: " + c.getStatus());
 
                     }
                 }

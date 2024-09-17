@@ -93,12 +93,9 @@ public class Main {
                                         System.out.println();
                                     }
                                     else if(s==4){
-                                        if (c.getCurrent_semester() == 1){
-                                            System.out.println("Cannot calculate as semester is ongoing.");
-                                        }
-                                        else{
-                                            c.calculateSGPA(c.getCompleted_courses(), c.getCurrent_semester()-1);
-                                        }
+                                        System.out.print("Enter semester number: ");
+                                        int p = sc.nextInt();
+                                        c.calculateSGPA(c.getCompleted_courses(), c.getCompleted_backlog_courses(), p);
                                         System.out.println();
                                     }
                                     else if(s==5){
