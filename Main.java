@@ -79,7 +79,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")){
-                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on");
+                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus.");
                                     int s = sc.nextInt();
                                     if(s==1){
                                         c.getregisteredcourses(c.getRegistered_courses());
@@ -102,7 +102,7 @@ public class Main {
                                         System.out.println();
                                     }
                                     else if(s==5){
-                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c.getCurrent_semester());
+                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c, c.getCurrent_semester());
                                         System.out.println();
                                     }
                                     else if(s==6){
@@ -141,6 +141,15 @@ public class Main {
                                     }
                                     else if(s==12){
                                         System.out.println(c.getCurrent_semester());
+                                    }
+                                    else if(s==13){
+                                        c.get_completed_records(c.getCompleted_courses());
+                                        c.get_completed_backlog_records(c.getCompleted_backlog_courses());
+                                    }
+                                    else if(s==14){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.get_course_syllabus(c.getRegistered_courses(),h);
                                     }
                                 }
                                 else{
@@ -204,8 +213,6 @@ public class Main {
                                         c.update_days(c.getCourses_under(), h);
                                     }
                                     else if (s==9){
-                                        System.out.print("Enter course name: ");
-                                        String h = sc.next();
                                         c.view_courses(c.getCourses_under());
                                         System.out.println();
                                     }

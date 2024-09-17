@@ -22,7 +22,7 @@ public class admin extends user {
     public void view_student_records(ArrayList<student> arr, String name){
         for (student c: arr){
             if (c.getName().equals(name)){
-                System.out.println(c.getPassword() + ", " + c.getEmail() + ", " + c.getRoll_no());
+                System.out.println("The password, email and roll number of the student is: " + c.getPassword() + ", " + c.getEmail() + ", " + c.getRoll_no());
             }
         }
     }
@@ -51,9 +51,9 @@ public class admin extends user {
         float sgpa; int sgpa1 = 0; int sgpa2 =0; int num1 = 0; int num2 = 0;
         for (student c: arr){
             if (c.getName().equals(name)){
-                System.out.println("The SGPA of the student is: ");
-                if (c.getCompleted_backlog_courses().isEmpty() || c.getCompleted_courses().isEmpty()){
-                    System.out.println("Cannot print CGPA or SGPA since there are no completed courses by this student. ");
+                if (c.getCompleted_backlog_courses().isEmpty() && c.getCompleted_courses().isEmpty()){
+                    System.out.println("Cannot print SGPA or CGPA since there are no completed courses by this student. ");
+                    return;
                 }
                 for (courses s: c.getCompleted_courses()){
                     if(s.getsemester() == semester){
@@ -68,9 +68,9 @@ public class admin extends user {
                     }
                 }
                 sgpa = (float) (sgpa1 + sgpa2) /(num1 + num2);
+                System.out.println("The SGPA of the student is: ");
                 System.out.println(sgpa);
-                System.out.println("The CGPA of the student is: ");
-                c.calculateCGPA(c.getCompleted_courses(), semester);
+                c.calculateCGPA(c.getCompleted_courses(), c.getCurrent_semester());
             }
         }
     }
@@ -106,7 +106,6 @@ public class admin extends user {
                         }
                     }
                 }
-
             }
         }
     }
@@ -116,19 +115,15 @@ public class admin extends user {
                 for (courses s: c.getCompleted_courses()){
                         if(s.getGPA()<4){
                             c.getCompleted_backlog_courses().add(s);
-                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
                     }
                 }
                 c.getCompleted_courses().removeIf(d -> d.getGPA()<4);
-                c.setCompleted_courses(c.getCompleted_courses());
                 for (courses s: c.getCompleted_backlog_courses()){
                     if(s.getGPA()>=4){
                         c.getCompleted_courses().add(s);
-                        c.setCompleted_courses(c.getCompleted_courses());
                     }
                 }
                 c.getCompleted_backlog_courses().removeIf(d -> d.getGPA()>=4);
-                c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
             }
         }
 
@@ -143,11 +138,9 @@ public class admin extends user {
                         s.setGPA(a);
                         if (a>=4){
                             c.getCompleted_courses().add(s);
-                            c.setCompleted_courses(c.getCompleted_courses());
                         }
                         else{
                             c.getCompleted_backlog_courses().add(s);
-                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
                         }
                     }
 
@@ -160,7 +153,7 @@ public class admin extends user {
         for (student c: arr){
             if(c.getName().equals(name)){
                 for (courses s: c.getRegistered_courses()){
-                    if (s.getcredits()>=4){
+                    if (s.getGPA()>=4){
                         flag = true;
                     }
                 }
@@ -168,17 +161,14 @@ public class admin extends user {
                     c.setCurrent_semester(c.getCurrent_semester() + 1);
                     System.out.println("The semester has been changed successfully, the current semester is: " + c.getCurrent_semester());
                     for (courses s: c.getRegistered_courses()){
-                        if(s.getcredits()>=4){
+                        if(s.getGPA()>=4){
                             c.getCompleted_courses().add(s);
-                            c.setCompleted_courses(c.getCompleted_courses());
                         }
                         else{
                             c.getCompleted_backlog_courses().add(s);
-                            c.setCompleted_backlog_courses(c.getCompleted_backlog_courses());
                         }
                     }
                     c.getRegistered_courses().clear();
-                    c.setRegistered_courses(c.getRegistered_courses());
                 }
                 else{
                     System.out.println("He cannot be promoted to the next semester! ");
@@ -191,7 +181,6 @@ public class admin extends user {
             if(p.getName().equals(name)){
                 if (p.getCourses_under().size()<2){
                     p.getCourses_under().add(course);
-                    p.setCourses_under(p.getCourses_under());
                 }
             }
         }
@@ -199,10 +188,11 @@ public class admin extends user {
     public void assign_professor(ArrayList<professor> arr, ArrayList<courses> arr1, String name, String course_name){
         for (professor p: arr){
             if(p.getName().equals(name)){
-                for (courses c: arr1){
-                    if (c.getcourse_name().equals(course_name)){
-                        p.getCourses_under().add(c);
-                        p.setCourses_under(p.getCourses_under());
+                if(p.getCourses_under().size()<2){
+                    for (courses c: arr1){
+                        if (c.getcourse_name().equals(course_name)){
+                            p.getCourses_under().add(c);
+                        }
                     }
                 }
             }

@@ -1,4 +1,5 @@
 package Java;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -20,12 +21,30 @@ public class student extends user implements course_catalog{
         this.name = name;
         this.roll_no = roll_no;
     }
+    public void get_completed_records(ArrayList<courses> arr){
+        if(arr.isEmpty()){
+            System.out.println("There are no passed courses! ");
+            return;
+        }
+        for(courses c: arr){
+            System.out.println("The completed (passed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + c.getGPA() + " " + c.getcourse_code() + " " + c.getsemester());
+        }
+    }
+    public void get_completed_backlog_records(ArrayList<courses> arr){
+        if(arr.isEmpty()){
+            System.out.println("There are no backlogs! ");
+            return;
+        }
+        for(courses c: arr){
+            System.out.println("The completed (failed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + c.getGPA() + " " + c.getcourse_code() + " " + c.getsemester());
+        }
+    }
     public void calculateCGPA(ArrayList<courses> arr, int semester){
         float sgpa = 0; int num= 0;int sem = 1;float cgpa = 0;
-        if (arr == null){
+        if (arr == null || arr.isEmpty()){
             System.out.println("There is no CGPA to be calculated, as there are no completed courses. ");
+            return;
         }
-        assert arr != null;
         if(semester==1){
             for(courses c:arr){
                 if(c.getsemester() == semester){
@@ -49,8 +68,14 @@ public class student extends user implements course_catalog{
         }
         System.out.println("The CGPA of the student is: " + cgpa/(sem-1));
     }
-
-    public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, int semester){
+    public void get_course_syllabus(ArrayList<courses> arr, String name){
+        for (courses c : arr){
+            if (c.getcourse_name().equals(name)){
+                System.out.println(c.getsyllabus());
+            }
+        }
+    }
+    public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, student s, int semester){
         for (courses c: arr1){
             if (c.getsemester() == semester && has_passed(arr1, c.getprereqs()) && !has_registered(arr2, c.getcourse_name())){
                 System.out.println("This is a course which you can apply for: " + c.getcourse_name());
@@ -58,10 +83,14 @@ public class student extends user implements course_catalog{
                 String f = sc.next();
                 if (Objects.equals(f, "y")){
                     arr2.add(c);
+                    c.getEnrolled_students().add(s);
                 }
             }
-            else{
-                System.out.println("The prereqs haven't been cleared or it has already been registered! ");
+            else if (c.getsemester() == semester && has_registered(arr2, c.getcourse_name())){
+                System.out.println("You have already registered for this course. ");
+            }
+            else if(c.getsemester() == semester && !has_passed(arr1, c.getprereqs())){
+                System.out.println("You have not passed the prerequisites for this course! ");
             }
         }
     }

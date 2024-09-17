@@ -21,22 +21,24 @@ public class professor extends user {
         }
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
+                System.out.println("Enter the syllabus: ");
                 c.setsyllabus(sc.nextLine());
+                System.out.println("Syllabus entered successfully.");
             }
         }
     }
     public void view_courses(ArrayList<courses> arr){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
         for (courses c: arr){
-                System.out.print(c.getcourse_name() + " - " + c.getcourse_code() + " - " +  c.getsyllabus());
+                System.out.print("The course name, course code and course syllabus is: " + c.getcourse_name() + " - " + c.getcourse_code() + " - " +  c.getsyllabus());
         }
     }
 
     public void update_timings(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
@@ -44,18 +46,22 @@ public class professor extends user {
             if (c.getcourse_name().equals(name)){
                 System.out.print("Enter the slot number you want to change the selected course to: ");
                 c.setslot(sc.nextInt());
+                System.out.println("Slot number changed successfully");
             }
         }
     }
     public void update_days(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
                 System.out.println("These are the original days of the course: ");
-                System.out.println(c.getdays());
+                for (String i: c.getdays()){
+                    System.out.print(i + " ");
+                }
+                System.out.println();
                 System.out.print("Enter the 2 days which you want to put for your course: ");
                 for(int i = 0; i<2; i++){
                     c.getdays().set(i, sc.next());
@@ -65,31 +71,37 @@ public class professor extends user {
     }
 
     public void update_enrollment_limit(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
+                System.out.print("Enter the new enrollment limit for this course. ");
                 c.setEnrollment_limit(sc.nextInt());
+                System.out.println("Enrollment limit changed successfully");
             }
         }
     }
     public void update_credits(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
         for (courses c: arr){
+            System.out.print("Enter the new credits for this course. ");
             if (c.getcourse_name().equals(name)){
                 c.setcredits(sc.nextInt());
+                System.out.print("Credits changed successfully. ");
             }
         }
     }
     public void update_office_hours(ArrayList<courses> arr, String name){
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
+                System.out.print("Enter the new office hours for this course. ");
                 c.setCourse_timings(sc.next());
+                System.out.print("Office hours changed successfully. ");
             }
         }
     }
@@ -100,7 +112,9 @@ public class professor extends user {
         }
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
+                System.out.print("Enter new prereqs for this course. ");
                 c.setprereqs(sc.next());
+                System.out.print("Prereqs changed successfully. ");
             }
         }
     }
@@ -112,7 +126,7 @@ public class professor extends user {
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
                 for (student d: c.getEnrolled_students()){
-                    System.out.print(d.getName() + " - " + d.getRoll_no());
+                    System.out.println("The student name and roll number is: " + d.getName() + " - " + d.getRoll_no());
                 }
             }
         }
