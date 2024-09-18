@@ -15,10 +15,18 @@ public class admin extends user {
             System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
         }
     }
-    public void add_course_catalog(ArrayList<courses> arr, courses course){
+    public void add_course_catalog(ArrayList<courses> arr,  courses course){
         arr.add(course);
     }
-    public void delete_from_course_catalog(ArrayList<courses> arr, String name){
+    public void delete_from_course_catalog(ArrayList<courses> arr, ArrayList<student> arr2, ArrayList<professor> arr3,  String name){
+        for (student s: arr2){
+            s.getCompleted_backlog_courses().removeIf(d-> d.getcourse_name().equals(name));
+            s.getCompleted_courses().removeIf(d-> d.getcourse_name().equals(name));
+            s.getRegistered_courses().removeIf(d-> d.getcourse_name().equals(name));
+        }
+        for(professor p: arr3){
+            p.getCourses_under().removeIf(d->d.getcourse_name().equals(name));
+        }
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
     public void view_student_records(ArrayList<student> arr, String name){
@@ -31,16 +39,16 @@ public class admin extends user {
     public void update_student_record(ArrayList<student> arr, String name, int n){
         for (student c: arr){
             if (c.getName().equals(name)){
-                if (n==1){
+                if(n==1){
                     c.setName(sc.next());
                 }
-                if (n==2){
+                else if(n==2){
                     c.setEmail(sc.next());
                 }
-                if (n==3){
+                else if(n==3){
                     c.setPassword(sc.next());
                 }
-                if(n==4){
+                else if(n==4){
                     c.setRoll_no(sc.nextInt());
                 }
                 else{

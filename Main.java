@@ -107,9 +107,9 @@ public class Main {
                                         for(courses o: c.getRegistered_courses()){
                                             System.out.println(o.getcourse_name());
                                         }
-                                        System.out.print("Enter name: ");
+                                        System.out.print("Enter course name: ");
                                         String h = sc.next();
-                                        c.dropcourses(c.getRegistered_courses(),h);
+                                        c.dropcourses(c.getRegistered_courses(),h, c);
                                     }
                                     else if(s==7){
                                         System.out.print("Enter course name: ");
@@ -172,7 +172,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                    System.out.println("Enter --> \n1)Change syllabus for a course \n2)Update timings for a particular course. \n3)Update the enrollment limit for a course \n4)Update the credits for a course \n5)Update the prerequisites for a course \n6)View enrolled students for a particular course, \n7)Update office hours for a particular course. \n8)Update the days of a course. \n9)View the courses under you(");
+                                    System.out.println("Enter --> \n1)Change syllabus for a course \n2)Update timings for a particular course. \n3)Update the enrollment limit for a course \n4)Update the credits for a course \n5)Update the prerequisites for a course \n6)View enrolled students for a particular course, \n7)Update office hours for a particular course. \n8)Update the days of a course. \n9)View the courses under you. ");
                                     int s = sc.nextInt();
                                     if(s==1){
                                         System.out.print("Enter course name: ");
@@ -259,7 +259,7 @@ public class Main {
                                     else if (s==3){
                                         System.out.print("Enter the name of the course: ");
                                         String h = sc.next();
-                                        c.delete_from_course_catalog(available_courses, h);
+                                        c.delete_from_course_catalog(available_courses, total_students,total_professors, h);
                                     }
                                     else if (s==4){
                                         System.out.print("Enter the name of the student: ");

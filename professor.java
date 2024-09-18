@@ -124,6 +124,10 @@ public class professor extends user {
         }
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
+                if (c.getEnrolled_students().isEmpty()){
+                    System.out.println("There are no students under the course which you teach.");
+                    return;
+                }
                 for (student d: c.getEnrolled_students()){
                     System.out.println("The student name and roll number is: " + d.getName() + " - " + d.getRoll_no());
                 }

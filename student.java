@@ -86,10 +86,10 @@ public class student extends user implements course_catalog{
                 }
             }
             else if (c.getsemester() == semester && has_registered(arr2, c.getcourse_name())){
-                System.out.println("You have already registered for this course. ");
+                System.out.println("You have already registered for " + c.getcourse_name());
             }
             else if(c.getsemester() == semester && !has_passed(arr1, c.getprereqs())){
-                System.out.println("You have not passed the prerequisites for this course! ");
+                System.out.println("You have not passed the prerequisites for " + c.getcourse_name());
             }
         }
     }
@@ -120,7 +120,12 @@ public class student extends user implements course_catalog{
             }
         }
     }
-    public void dropcourses(ArrayList<courses> arr, String name){
+    public void dropcourses(ArrayList<courses> arr, String name, student s){
+        for (courses c: arr){
+            if(c.getcourse_name().equals(name)){
+                c.getEnrolled_students().removeIf(d -> d.getName().equals(s.getName()));
+            }
+        }
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
     public void calculateSGPA(ArrayList<courses> arr1, ArrayList<courses> arr2, int semester){
@@ -155,7 +160,7 @@ public class student extends user implements course_catalog{
     }
     public void getavailablecourses(ArrayList<courses> arr, int semester){
         for (courses c : arr){
-            if (c.getsemester() == semester){
+            if (c.getsemester() == semester && has_passed(arr, c.getprereqs())){
                 System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
             }
         }
@@ -206,7 +211,7 @@ public class student extends user implements course_catalog{
         }
     }
     public void set_complaint(ArrayList<complaints> arr){
-        System.out.println("Enter the complaint that you have");
+        System.out.println("Enter the complaint that you have: ");
         String a = sc.nextLine();
         complaints complaint = new complaints(a);
         arr.add(complaint);
@@ -218,7 +223,7 @@ public class student extends user implements course_catalog{
         }
         else {
             for (complaints c : arr) {
-                System.out.println(c.getComplaint() + " - " + c.getDateTime() + "Status is: " + c.getStatus());
+                System.out.println(c.getComplaint() + " - " + c.getDateTime() + " | Status is: " + c.getStatus());
             }
         }
     }
