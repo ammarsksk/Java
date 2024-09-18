@@ -79,7 +79,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")){
-                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status");
+                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status. ");
                                     int s = sc.nextInt();
                                     if(s==1){
                                         c.getregisteredcourses(c.getRegistered_courses());

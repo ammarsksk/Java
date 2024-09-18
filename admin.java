@@ -191,6 +191,7 @@ public class admin extends user {
             if(p.getName().equals(name)){
                 if (p.getCourses_under().size()<2){
                     p.getCourses_under().add(course);
+                    course.setprofessor_name(p.getName());
                 }
             }
         }
@@ -202,13 +203,13 @@ public class admin extends user {
                     for (courses c: arr1){
                         if (c.getcourse_name().equals(course_name)){
                             p.getCourses_under().add(c);
+                            c.setprofessor_name(p.getName());
                         }
                     }
                 }
             }
         }
     }
-
     public void view_complaint(ArrayList<student> arr, String name){
         for (student s: arr){
             if (s.getName().equals(name)){
