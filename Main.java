@@ -27,14 +27,22 @@ public class Main {
         ArrayList<courses> available_courses = new ArrayList<courses>() {{
             add(c11); add(c12); add(c13); add(c21); add(c22); add(c23);
         }};
-
-        ArrayList<student> total_students = new ArrayList<student>();
-        ArrayList<professor> total_professors = new ArrayList<professor>();
-        ArrayList<admin> admins = new ArrayList<admin>();
-
-        boolean y = true;
-
-        while (y){
+        student s1 = new student("ammar@gmail.com", "1234", "ammar", 2023080);
+        student s2 = new student("abhinav@gmail.com", "1234", "abhinav", 2023031);
+        student s3 = new student("sarthak@gmail.com", "1234", "sarthak", 2023491);
+        ArrayList<student> total_students = new ArrayList<student>(){{
+            add(s1); add(s2); add(s3);
+        }};
+        professor p1 = new professor("bnjain@gmail.com", "1234", "bijendra");
+        professor p2 = new professor("abbuduru@gmail.com", "1234", "arun");
+        ArrayList<professor> total_professors = new ArrayList<professor>(){{
+            add(p1);add(p2);
+        }};
+        admin a1 = new admin("admin@gmail.com");
+        ArrayList<admin> admins = new ArrayList<admin>(){{
+            add(a1);
+        }};
+        while (true){
             System.out.println("Enter --> \n1 - Login \n2 - Sign Up \n3 - Exit");
             int x = sc.nextInt();
             if (x == 1){
@@ -43,16 +51,9 @@ public class Main {
 
                 boolean flag1 = false;
                 boolean flag2 = false;
+                boolean flag3 = false;
                 System.out.print("Enter Email: ");
                 String eml = sc.next();
-                if (total_students.isEmpty() && z==1){
-                    System.out.println("Email does not exist! ");
-                    continue;
-                }
-                if (total_professors.isEmpty() && z==2){
-                    System.out.println("Email does not exist! ");
-                    continue;
-                }
                 for (student s: total_students){
                     if (s.getEmail().equals(eml)){
                         flag1= true;
@@ -65,7 +66,13 @@ public class Main {
                         break;
                     }
                 }
-                if(!flag1 && !flag2 && admins.isEmpty()){
+                for (admin a: admins){
+                    if (a.getEmail().equals(eml)){
+                        flag3 = true;
+                        break;
+                    }
+                }
+                if(!flag1 && !flag2 && !flag3){
                     System.out.println("Email does not exist! ");
                     continue;
                 }
@@ -163,7 +170,7 @@ public class Main {
                                 }
                             }
                         }
-                        else{
+                        else if (!c.getPassword().equals(passw)){
                             System.out.println("Enter correct password! ");
                         }
                     }
@@ -225,12 +232,16 @@ public class Main {
                                         c.view_courses(c.getCourses_under());
                                         System.out.println();
                                     }
-                                } else {
+                                }
+                                else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){
                                     break;
+                                }
+                                else{
+                                    System.out.println("Please enter the correct command");
                                 }
                             }
                         }
-                        else{
+                        else if (!c.getPassword().equals(passw)){
                             System.out.println("Enter correct password! ");
                         }
                     }
@@ -362,8 +373,11 @@ public class Main {
                                         c.delete_student_complaints(total_students, h);
                                     }
                                 }
-                                else {
+                                else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){
                                     break;
+                                }
+                                else{
+                                    System.out.println("Please enter the correct command");
                                 }
                             }
                         }
@@ -396,6 +410,12 @@ public class Main {
                         flag = false;
                     }
                 }
+                for (admin a: admins){
+                    if (a.getEmail().equals(eml)){
+                        System.out.println("Email already exists! ");
+                        flag = false;
+                    }
+                }
                 if (!flag){
                     continue;
                 }
@@ -408,10 +428,13 @@ public class Main {
                     String passw = sc.next();
                     System.out.print("\nEnter roll number: ");
                     int roll_no = sc.nextInt();
-                    if(total_students.size()<3){
+                    if(total_students.size()<7){
                         student stu1 = new student(eml, passw, name, roll_no);
                         total_students.add(stu1);
                         System.out.println("You have successfully signed up!");
+                    }
+                    else{
+                        System.out.println("Maximum numbers of students exists! ");
                     }
                     System.out.println();
                 }
@@ -420,23 +443,27 @@ public class Main {
                     String name = sc.next();
                     System.out.print("\nEnter new Password: ");
                     String passw = sc.next();
-                    if(total_professors.size()<2){
+                    if(total_professors.size()<5){
                         professor prof1 = new professor(eml, passw, name);
                         total_professors.add(prof1);
                         System.out.println("You have successfully signed up!");
+                    }
+                    else{
+                        System.out.println("Maximum numbers of professors exists! ");
                     }
                     System.out.println();
                 }
                 else if (z == 3) {
 
                     admin admin1 = new admin(eml);
-                    if(!admins.isEmpty()){
+                    if(admins.size()>2){
                         System.out.println("Admin already exists! ");
                     }
                     else{
                         System.out.println("New Admin has been successfully added! ");
                         admins.add(admin1);
                     }
+                    System.out.println();
                 }
                 else if (z == 4) {
                     break;
