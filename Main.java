@@ -155,10 +155,16 @@ public class Main {
                                         c.view_complaints(c.getStudent_complaints());
                                     }
                                 }
-                                else{
+                                else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){
                                     break;
                                 }
+                                else{
+                                    System.out.println("Please enter the correct command");
+                                }
                             }
+                        }
+                        else{
+                            System.out.println("Enter correct password! ");
                         }
                     }
                 }
@@ -223,6 +229,9 @@ public class Main {
                                     break;
                                 }
                             }
+                        }
+                        else{
+                            System.out.println("Enter correct password! ");
                         }
                     }
                 }
@@ -357,6 +366,9 @@ public class Main {
                                     break;
                                 }
                             }
+                        }
+                        else{
+                            System.out.println("Enter correct password! ");
                         }
                     }
                 }
