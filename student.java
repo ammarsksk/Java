@@ -68,10 +68,15 @@ public class student extends user implements course_catalog{
         System.out.println("The CGPA of the student is: " + cgpa/(sem-1));
     }
     public void get_course_syllabus(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println(c.getsyllabus());
             }
+        }
+        if(flag){
+            System.out.println("There are no courses under that name! ");
         }
     }
     public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, student s, int semester){
@@ -112,19 +117,29 @@ public class student extends user implements course_catalog{
         return pass;
     }
     public void get_weekly_schedule(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println("The days are: " + c.getdays());
                 System.out.println("The slot number is: " + c.getslot());
                 System.out.println("The location is: " + c.getlocations());
             }
         }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
+        }
     }
     public void dropcourses(ArrayList<courses> arr, String name, student s){
+        boolean flag = true;
         for (courses c: arr){
             if(c.getcourse_name().equals(name)){
+                flag = false;
                 c.getEnrolled_students().removeIf(d -> d.getName().equals(s.getName()));
             }
+        }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
         }
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
@@ -173,31 +188,51 @@ public class student extends user implements course_catalog{
         }
     }
     public void getcoursecode(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println(c.getcourse_code());
             }
         }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
+        }
     }
     public void getprofname(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println(c.getprofessor_name());
             }
         }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
+        }
     }
     public void getcoursecredits(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println(c.getcredits());
             }
         }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
+        }
     }
     public void getcourseprereqs(ArrayList<courses> arr, String name){
+        boolean flag = true;
         for (courses c : arr){
             if (c.getcourse_name().equals(name)){
+                flag = false;
                 System.out.println(c.getprereqs());
             }
+        }
+        if(flag){
+            System.out.println("The course doesn't exist! ");
         }
     }
     public void getregisteredcourses(ArrayList<courses> arr){
@@ -213,10 +248,12 @@ public class student extends user implements course_catalog{
     public void set_complaint(ArrayList<complaints> arr){
         System.out.println("Enter the complaint that you have: ");
         String a = sc.nextLine();
+        if (Objects.equals(a, "")){
+            a = sc.nextLine();
+        }
         complaints complaint = new complaints(a);
         arr.add(complaint);
     }
-
     public void view_complaints(ArrayList<complaints> arr){
         if (arr.isEmpty()){
             System.out.println("There are no complaints from you. ");

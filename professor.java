@@ -105,7 +105,7 @@ public class professor extends user {
         }
     }
     public void update_prereqs(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }
@@ -118,7 +118,7 @@ public class professor extends user {
         }
     }
     public void view_enrolled_students(ArrayList<courses> arr, String name){
-        if (arr == null){
+        if (arr.isEmpty()){
             System.out.println("There are no courses under this prof.");
             return;
         }

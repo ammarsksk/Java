@@ -30,15 +30,22 @@ public class admin extends user {
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
     public void view_student_records(ArrayList<student> arr, String name){
+        boolean flag = true;
         for (student c: arr){
             if (c.getName().equals(name)){
                 System.out.println("The password, email and roll number of the student is: " + c.getPassword() + ", " + c.getEmail() + ", " + c.getRoll_no());
+                flag = false;
             }
+        }
+        if(flag){
+            System.out.println("The student doesn't exist. ");
         }
     }
     public void update_student_record(ArrayList<student> arr, String name, int n){
+        boolean flag = true;
         for (student c: arr){
             if (c.getName().equals(name)){
+                flag = false;
                 if(n==1){
                     c.setName(sc.next());
                 }
@@ -55,6 +62,9 @@ public class admin extends user {
                     System.out.println("Wrong input.");
                 }
             }
+        }
+        if (flag){
+            System.out.println("The student doesn't exist. ");
         }
     }
     public void get_CGPA_SGPA(ArrayList<student> arr, String name, int semester){
@@ -85,24 +95,37 @@ public class admin extends user {
         }
     }
     public void get_grades(ArrayList<student> arr, String name, String course_name){
+        boolean flag1 = true; boolean flag2 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
                 for (courses s: c.getCompleted_courses()){
                     if(s.getcourse_name().equals(course_name)){
                         System.out.println("The GPA of this course is: " + s.getGPA());
                     }
+                    flag2 = false;
                 }
             }
+            flag1 = false;
+        }
+        if(flag1){
+            System.out.println("The student doesn't exist");
+            return;
+        }
+        if(flag2){
+            System.out.println("The student has not completed this course yet.");
         }
     }
     public void change_completed_grades(ArrayList<student> arr, String name, String course_name){
+        boolean flag1 = true; boolean flag2 = true; boolean flag3 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
+                flag1 = false;
                 System.out.println("Would you like to change a backlog or update a passed course (1 for backlog, 2 for passed course) --> ");
                 int a = sc.nextInt();
                 if (a==1){
                     for (courses s: c.getCompleted_backlog_courses()){
                         if(s.getcourse_name().equals(course_name)){
+                            flag2 = false;
                             System.out.println("Enter the new grade: ");
                             s.setGPA(sc.nextInt());
                         }
@@ -111,12 +134,20 @@ public class admin extends user {
                 else if (a==2){
                     for (courses s: c.getCompleted_courses()){
                         if(s.getcourse_name().equals(course_name)){
+                            flag3 = false;
                             System.out.println("Enter the new grade: ");
                             s.setGPA(sc.nextInt());
                         }
                     }
                 }
             }
+        }
+        if(flag1){
+            System.out.println("Student not found.");
+            return;
+        }
+        if(flag2 && flag3){
+            System.out.println("The course wasn't found.");
         }
     }
     public void renew_grades_lists(ArrayList<student> arr, String name){
@@ -139,10 +170,13 @@ public class admin extends user {
 
     }
     public void set_grades(ArrayList<student> arr, String name, String course_name){
+        boolean flag1 = true; boolean flag2 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
+                flag1 = false;
                 for (courses s: c.getRegistered_courses()){
                     if(s.getcourse_name().equals(course_name)){
+                        flag2 = false;
                         System.out.println("Enter the GPA of the student --> ");
                         int a = sc.nextInt();
                         s.setGPA(a);
@@ -157,11 +191,20 @@ public class admin extends user {
                 }
             }
         }
+        if(flag1){
+            System.out.println("Student doesn't exist. ");
+            return;
+        }
+        if(flag2){
+            System.out.println("Course doesn't exist. ");
+        }
     }
     public void change_semester(ArrayList<student> arr, String name){
         boolean flag = false;
+        boolean flag1 = true;
         for (student c: arr){
             if(c.getName().equals(name)){
+                flag1 = false;
                 for (courses s: c.getRegistered_courses()){
                     if (s.getGPA()>=4){
                         flag = true;
@@ -185,34 +228,43 @@ public class admin extends user {
                 }
             }
         }
-    }
-    public void assign_professor(ArrayList<professor> arr, courses course, String name){
-        for (professor p: arr){
-            if(p.getName().equals(name)){
-                if (p.getCourses_under().size()<2){
-                    p.getCourses_under().add(course);
-                    course.setprofessor_name(p.getName());
-                }
-            }
+        if(flag1){
+            System.out.println("The student doesn't exist");
         }
     }
     public void assign_professor(ArrayList<professor> arr, ArrayList<courses> arr1, String name, String course_name){
+        boolean flag1 = true; boolean flag2 = true;
         for (professor p: arr){
             if(p.getName().equals(name)){
+                flag1 = false;
                 if(p.getCourses_under().size()<2){
                     for (courses c: arr1){
                         if (c.getcourse_name().equals(course_name)){
+                            flag2 = false;
                             p.getCourses_under().add(c);
                             c.setprofessor_name(p.getName());
                         }
                     }
                 }
+                else{
+                    System.out.println("The professor already has the maximum number of courses! ");
+                    return;
+                }
             }
+        }
+        if(flag1){
+            System.out.println("Professor doesn't exist! ");
+            return;
+        }
+        if(flag2){
+            System.out.println("The professor doesn't have this course! ");
         }
     }
     public void view_complaint(ArrayList<student> arr, String name){
+        boolean flag = true;
         for (student s: arr){
             if (s.getName().equals(name)){
+                flag = false;
                 if (s.getStudent_complaints().isEmpty()){
                     System.out.println("There are no complaints from this student. ");
                 }
@@ -224,11 +276,15 @@ public class admin extends user {
                 }
             }
         }
+        if(flag){
+            System.out.println("Student doesn't exist! ");
+        }
     }
-
     public void resolution (ArrayList<student> arr, String name){
+        boolean flag = true;
         for (student s: arr) {
             if (s.getName().equals(name)) {
+                flag = false;
                 if (s.getStudent_complaints().isEmpty()) {
                     System.out.println("There are no complaints from this student. ");
                 }
@@ -239,10 +295,15 @@ public class admin extends user {
                 }
             }
         }
+        if(flag){
+            System.out.println("Student doesn't exist! ");
+        }
     }
     public void delete_student_complaints(ArrayList<student> arr, String name){
+        boolean flag = true;
         for (student s: arr) {
             if (s.getName().equals(name)) {
+                flag = false;
                 if (s.getStudent_complaints().isEmpty()) {
                     System.out.println("There are no complaints from this student. ");
                 }
@@ -250,6 +311,9 @@ public class admin extends user {
                     s.getStudent_complaints().removeIf(d -> Objects.equals(d.getStatus(), "Resolved"));
                 }
             }
+        }
+        if(flag){
+            System.out.println("Student doesn't exist! ");
         }
     }
     public void sort_complaints(ArrayList<student> arr, String name){

@@ -27,14 +27,14 @@ public class Main {
         ArrayList<courses> available_courses = new ArrayList<courses>() {{
             add(c11); add(c12); add(c13); add(c21); add(c22); add(c23);
         }};
-        student s1 = new student("ammar@gmail.com", "1234", "ammar", 2023080);
-        student s2 = new student("abhinav@gmail.com", "1234", "abhinav", 2023031);
-        student s3 = new student("sarthak@gmail.com", "1234", "sarthak", 2023491);
+        student s1 = new student("ammar@gmail.com", "1234", "Ammar", 2023080);
+        student s2 = new student("abhinav@gmail.com", "1234", "Abhinav", 2023031);
+        student s3 = new student("sarthak@gmail.com", "1234", "Sarthak", 2023491);
         ArrayList<student> total_students = new ArrayList<student>(){{
             add(s1); add(s2); add(s3);
         }};
-        professor p1 = new professor("bnjain@gmail.com", "1234", "bijendra");
-        professor p2 = new professor("abbuduru@gmail.com", "1234", "arun");
+        professor p1 = new professor("bnjain@gmail.com", "1234", "Bijendra");
+        professor p2 = new professor("abbuduru@gmail.com", "1234", "Arun");
         ArrayList<professor> total_professors = new ArrayList<professor>(){{
             add(p1);add(p2);
         }};
@@ -328,33 +328,11 @@ public class Main {
                                         c.change_semester(total_students, h);
                                     }
                                     else if (s==11){
-                                        System.out.println("Do you want to add a new course or an existing course (1 for new, 2 for existing): ");
-                                        int q = sc.nextInt();
-                                        if(q == 1){
-                                            System.out.println("Add the course_name, course_code, semester no., professor_name, credits allowed, syllabus, location, prereqs, slot, enrollment limit of the course respectively: ");
-                                            String course_name = sc.next();
-                                            String course_code = sc.next();
-                                            int semester = sc.nextInt();
-                                            String professor_name = sc.next();
-                                            int credits = sc.nextInt();
-                                            sc.nextLine();
-                                            String syllabus = sc.nextLine();
-                                            String locations = sc.next();
-                                            String prereqs = sc.next();
-                                            int slot = sc.nextInt();
-                                            int enrollment_limit = sc.nextInt();
-                                            courses c100 = new courses(course_name, course_code, semester, professor_name, credits, syllabus, locations, prereqs, slot, enrollment_limit);
-                                            System.out.print("Enter the name of the professor: ");
-                                            String h = sc.next();
-                                            c.assign_professor(total_professors, c100, h);
-                                        }
-                                        else if(q == 2){
-                                            System.out.print("Enter the name of the professor: ");
-                                            String h = sc.next();
-                                            System.out.print("Enter the name of the existing course: ");
-                                            String g = sc.next();
-                                            c.assign_professor(total_professors, available_courses, h, g);
-                                        }
+                                        System.out.print("Enter the name of the professor: ");
+                                        String h = sc.next();
+                                        System.out.print("Enter the name of the existing course: ");
+                                        String g = sc.next();
+                                        c.assign_professor(total_professors, available_courses, h, g);
                                     }
                                     else if (s==12){
                                         System.out.print("Enter the name of the student: ");
