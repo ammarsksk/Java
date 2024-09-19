@@ -257,7 +257,7 @@ public class admin extends user {
             return;
         }
         if(flag2){
-            System.out.println("The professor doesn't have this course! ");
+            System.out.println("The course doesn't exist! ");
         }
     }
     public void view_complaint(ArrayList<student> arr, String name){

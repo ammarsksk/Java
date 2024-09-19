@@ -99,7 +99,7 @@ public class professor extends user {
         for (courses c: arr){
             if (c.getcourse_name().equals(name)){
                 System.out.print("Enter the new office hours for this course. ");
-                c.setCourse_timings(sc.next());
+                c.setOffice_hours(sc.next());
                 System.out.print("Office hours changed successfully. ");
             }
         }

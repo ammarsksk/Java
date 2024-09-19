@@ -76,7 +76,7 @@ public class student extends user implements course_catalog{
             }
         }
         if(flag){
-            System.out.println("There are no courses under that name! ");
+            System.out.println("There are no courses under that name / Student hasn't registered for it! ");
         }
     }
     public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, student s, int semester){
@@ -139,7 +139,7 @@ public class student extends user implements course_catalog{
             }
         }
         if(flag){
-            System.out.println("The course doesn't exist! ");
+            System.out.println("The course doesn't exist or student hasn't registered! ");
         }
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
@@ -196,7 +196,7 @@ public class student extends user implements course_catalog{
             }
         }
         if(flag){
-            System.out.println("The course doesn't exist! ");
+            System.out.println("The course doesn't exist or student hasn't registered! ");
         }
     }
     public void getprofname(ArrayList<courses> arr, String name){
@@ -205,6 +205,18 @@ public class student extends user implements course_catalog{
             if (c.getcourse_name().equals(name)){
                 flag = false;
                 System.out.println(c.getprofessor_name());
+            }
+        }
+        if(flag){
+            System.out.println("The course doesn't exist or student hasn't registered! ");
+        }
+    }
+    public void get_office_hours(ArrayList<courses> arr, String name){
+        boolean flag = true;
+        for (courses c : arr){
+            if (c.getcourse_name().equals(name)){
+                flag = false;
+                System.out.println(c.getOffice_hours());
             }
         }
         if(flag){

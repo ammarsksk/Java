@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class courses {
     private String course_name;
-    private String course_timings;
+    private String office_hours;
     private String course_code;
     private int GPA;
     private int credits;
@@ -147,11 +147,11 @@ public class courses {
         this.enrolled_students = enrolled_students;
     }
 
-    public String getCourse_timings() {
-        return course_timings;
+    public String getOffice_hours() {
+        return office_hours;
     }
 
-    public void setCourse_timings(String course_timings) {
-        this.course_timings = course_timings;
+    public void setOffice_hours(String office_hours) {
+        this.office_hours = office_hours;
     }
 }
