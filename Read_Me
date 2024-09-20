@@ -1,0 +1,55 @@
+The code works in the following manner -->                                                                                                                                 ^
+                                                                                                                                                                           |
+The code first asks the user to login or signup, there are already 3 students, 2 professors and 1 admin hard coded.                                                 Press this button to run code.
+The user can further sign in 3 more students, 2 more professors and 1 more admin.
+
+After selecting the appropriate option, the code proceeds to give you the choice of selecting between student, professor, and admin.
+    1) Assuming that login was chosen, then the code goes to ask whether the student, professor or admin is signing in and then asks you to enter the email and password. If either don't match, the appropriate message is shown and the it goes back to login/sign up page.
+    2) Assuming that sign up was chosen, first email is asked (then if email already exists, that is shown on screen and it goes back to login/sign up) and then password is asked. The user successfully signed up.
+
+Now moving on to the roles:
+
+    1) Admin -->
+
+        a) The admin can look at the student records such as personal information etc.
+        b) They can see the grades of a student.
+        c) They can set the grades of a student.
+        d) They can promote a student to the next semester (only if the student hasn't failed all courses)
+        e) They can see the CGPA and SGPA (for a particular semester - If the course hasn't been completed, then it shows appropriate message).
+        f) They can assign courses to a professor.
+        g) The admin can see the complaints of any student, and resolve them accordingly.
+
+    2) Professor -->
+
+        a) The professor can set the syllabus, course timings, course credits, office hours and prerequisites (it will be a course name)
+        b) They can view the students under them.
+        c) They can view the courses under them.
+
+    3) Student -->
+
+        a) The student can view the completed courses and they have been sorted by whether the student has passed or failed them.
+        b) The student can find out his CGPA and SGPA.
+        c) He can register for courses (suppose he is in the second semester, he can only see the courses for which he has passed the prereqs).
+        d) The student can drop courses (This will reflect in his CGPA and SGPA also).
+        e) The student can get the courses available courses (only ones which he has passed the prerequisite for, for first semester there are no pre-requisites).
+        f) The student can get course credits, office hours, prereqs, professor name etc.
+
+Now moving on to application of OOPS concepts:
+
+    1) Encapsulation -->
+
+        The code uses the key word PRIVATE for all the attributes of all classes and uses getters and setters to access the attributes, this takes care of encapsulation.
+
+    2) Abstraction and Inheritance-->
+
+        The user class is abstract, and the student, professor and admin classes inherit from the user class,
+        the subclasses use the keyword SUPER to define the constructor.
+
+    3) Polymorphism -->
+
+        The user class has 2 constructors (1st for student and prof, 2nd for admin).
+        The constructors have different number of parameters.
+
+    4) Interface -->
+
+        The course catalog is an interface that exists and has some method declarations, that cover student methods like calculating cgpa, sgpa and available courses.

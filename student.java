@@ -10,7 +10,7 @@ public class student extends user implements course_catalog{
     private int roll_no;
     private int current_semester = 1; // DEFAULT VALUE
 
-    private HashMap<courses, Integer> student_sgpa = new HashMap<courses, Integer>();
+    private HashMap<courses, Float> student_sgpa = new HashMap<courses, Float>();
     private ArrayList<complaints> student_complaints = new ArrayList<complaints>();;
     private ArrayList<courses> completed_backlog_courses = new ArrayList<courses>();;
     private ArrayList<courses> registered_courses = new ArrayList<courses>();;
@@ -22,24 +22,24 @@ public class student extends user implements course_catalog{
         this.roll_no = roll_no;
     }
 
-    public void get_completed_records(HashMap<courses, Float> hash){
-        if (hash.isEmpty()) {
-            System.out.println("There are no backlogs! ");
+    public void get_completed_records(ArrayList<courses> arr, HashMap<courses, Float> hash){
+        if (arr.isEmpty()) {
+            System.out.println("There are no passed courses! ");
             return;
         }
         for (courses c: hash.keySet()){
-            if(hash.get(c)>=4){
+            if(hash.get(c)>=4 && hash.get(c)!=0){
                 System.out.println("The completed (passed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + hash.get(c) + " " + c.getcourse_code() + " " + c.getsemester());
             }
         }
     }
-    public void get_completed_backlog_records(HashMap<courses, Float> hash) {
-        if (hash.isEmpty()) {
+    public void get_completed_backlog_records(ArrayList<courses> arr, HashMap<courses, Float> hash) {
+        if (arr.isEmpty()) {
             System.out.println("There are no backlogs! ");
             return;
         }
         for (courses c: hash.keySet()){
-            if(hash.get(c)<4){
+            if(hash.get(c)<4 && hash.get(c) != 0){
                 System.out.println("The completed (failed) course name, GPA, code and semester respectively is: " + c.getcourse_name() + " " + hash.get(c) + " " + c.getcourse_code() + " " + c.getsemester());
             }
         }
@@ -72,12 +72,20 @@ public class student extends user implements course_catalog{
         }
     }
     public void make_registered_courses(ArrayList<courses> arr1, ArrayList<courses> arr2, student s, HashMap<courses, Float> hash, int semester){
+        int cred_limit = 0;
+        for (courses c: arr2){
+            cred_limit += c.getcredits();
+        }
         for (courses c: arr1){
-            if (c.getsemester() == semester && has_passed(hash, c.getprereqs()) && !has_registered(arr2, c.getcourse_name())){
+            if (c.getsemester() == semester && has_passed(hash, c.getprereqs()) && !has_registered(arr2, c.getcourse_name()) && cred_limit<20){
                 System.out.println("This is a course which you can apply for: " + c.getcourse_name());
                 System.out.print("Enter y or n --> y to apply, n to reject: ");
                 String f = sc.next();
                 if (Objects.equals(f, "y")){
+                    if (c.getcredits() + cred_limit >20){
+                        System.out.println("You have passed the course limit, you cannot add this course any more! ");
+                        return;
+                    }
                     hash.put(c, 0F);
                     arr2.add(c);
                     c.getEnrolled_students().add(s);
@@ -103,7 +111,7 @@ public class student extends user implements course_catalog{
     public boolean has_passed(HashMap<courses, Float> hash, String name){
         boolean pass = Objects.equals(name, "NULL");
         for (courses c: hash.keySet()){
-            if(hash.get(c)>=4){
+            if(hash.get(c)>=4 && Objects.equals(c.getcourse_name(), name)){
                 pass = true;
             }
         }
@@ -152,7 +160,7 @@ public class student extends user implements course_catalog{
             System.out.println("The semester is ongoing or the student hasn't been assigned grades yet. ");
         }
         sgpa = sgpa /num;
-        System.out.println("The CGPA of the student is: " + sgpa);
+        System.out.println("The SGPA of the student is: " + sgpa);
     }
     public void getavailablecourses(ArrayList<courses> arr, HashMap<courses, Float> hash, int semester){
         for (courses c : arr){
@@ -307,11 +315,11 @@ public class student extends user implements course_catalog{
         this.student_complaints = student_complaints;
     }
 
-    public HashMap<courses, Integer> getStudent_sgpa() {
+    public HashMap<courses, Float> getStudent_sgpa() {
         return student_sgpa;
     }
 
-    public void setStudent_sgpa(HashMap<courses, Integer> student_sgpa) {
+    public void setStudent_sgpa(HashMap<courses, Float> student_sgpa) {
         this.student_sgpa = student_sgpa;
     }
 }

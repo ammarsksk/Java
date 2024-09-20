@@ -157,13 +157,13 @@ public class admin extends user {
             if(c.getName().equals(name)){
                 c.getCompleted_backlog_courses().clear();
                 for(courses i : hash.keySet()){
-                    if(hash.get(i)<4){
+                    if(hash.get(i)<4 && hash.get(i) != 0){
                         c.getCompleted_backlog_courses().add(i);
                     }
                 }
                 c.getCompleted_courses().clear();
                 for(courses i : hash.keySet()){
-                    if(hash.get(i)>=4){
+                    if(hash.get(i)>=4 && hash.get(i) != 0){
                         c.getCompleted_courses().add(i);
                     }
                 }
@@ -180,7 +180,7 @@ public class admin extends user {
                         flag2 = false;
                         System.out.println("Enter the new CGPA --> ");
                         float a = sc.nextFloat();
-                        hash.replace(i, a);
+                        hash.put(i, a);
                         if(a >= 4){
                             c.getCompleted_courses().add(i);
                         }
@@ -206,6 +206,10 @@ public class admin extends user {
             if(c.getName().equals(name)){
                 flag1 = false;
                 for(courses i: hash.keySet()){
+                    if(hash.get(i) == 0){
+                        System.out.println("There is a course which hasn't been graded yet!");
+                        return;
+                    }
                     if(hash.get(i)>=4){
                         flag = true;
                     }
@@ -214,10 +218,10 @@ public class admin extends user {
                     c.setCurrent_semester(c.getCurrent_semester() + 1);
                     System.out.println("The semester has been changed successfully, the current semester is: " + c.getCurrent_semester());
                     for(courses i: hash.keySet()){
-                        if(hash.get(i) >= 4){
+                        if(hash.get(i) >= 4 && hash.get(i) != 0){
                             c.getCompleted_courses().add(i);
                         }
-                        else{
+                        else if(hash.get(i) < 4 && hash.get(i) != 0){
                             c.getCompleted_backlog_courses().add(i);
                         }
                     }

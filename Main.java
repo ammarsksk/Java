@@ -149,8 +149,8 @@ public class Main {
                                         System.out.println(c.getCurrent_semester());
                                     }
                                     else if(s==13){
-                                        c.get_completed_records(grades);
-                                        c.get_completed_backlog_records(grades);
+                                        c.get_completed_records(c.getCompleted_courses(), grades);
+                                        c.get_completed_backlog_records(c.getCompleted_backlog_courses(), grades);
                                     }
                                     else if(s==14){
                                         System.out.print("Enter course name: ");
@@ -280,6 +280,9 @@ public class Main {
                                         String prereqs = sc.next();
                                         int slot = sc.nextInt();
                                         int enrollment_limit = sc.nextInt();
+                                        if(!(credits == 2 || credits == 4)){
+                                            System.out.println("The credits cannot be anything other than 2 or 4.");
+                                        }
                                         courses c100 = new courses(course_name, course_code, semester, professor_name, credits, syllabus, locations, prereqs, slot, enrollment_limit);
                                         c.add_course_catalog(available_courses, c100);
                                     }
