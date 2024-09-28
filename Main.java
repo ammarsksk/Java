@@ -1,13 +1,11 @@
 package Java;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);
-        HashMap<courses, Float> grades = new HashMap<courses, Float>();
         courses c11 = new courses("IP", "CSE_101", 1,"Bijendra Nath Jain", 4, "Python", "C101", "NULL", 1, 600);
         courses c12 = new courses("DC", "ECE_101", 1, "Pravesh Biyani", 4, "Resistors, Flip-flops", "C102", "NULL", 2, 600);
         courses c13 = new courses("LA", "MTH_101", 1, "Samresh Chatterji", 4, "Matrices, Vector Fields", "C201", "NULL", 3, 600);
@@ -94,21 +92,21 @@ public class Main {
                                         c.getregisteredcourses(c.getRegistered_courses());
                                     }
                                     else if(s==2){
-                                        c.getavailablecourses(available_courses, grades, c.getCurrent_semester());
+                                        c.getavailablecourses(available_courses, c.getStudent_sgpa(), c.getCurrent_semester());
                                         System.out.println();
                                     }
                                     else if(s==3){
-                                        c.calculateCGPA(grades);
+                                        c.calculateCGPA(c.getStudent_sgpa());
                                         System.out.println();
                                     }
                                     else if(s==4){
                                         System.out.print("Enter semester number: ");
                                         int p = sc.nextInt();
-                                        c.calculateSGPA(grades, p);
+                                        c.calculateSGPA(c.getStudent_sgpa(), p);
                                         System.out.println();
                                     }
                                     else if(s==5){
-                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c, grades, c.getCurrent_semester());
+                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c, c.getStudent_sgpa(), c.getCurrent_semester());
                                         System.out.println();
                                     }
                                     else if(s==6){
@@ -149,8 +147,8 @@ public class Main {
                                         System.out.println(c.getCurrent_semester());
                                     }
                                     else if(s==13){
-                                        c.get_completed_records(c.getCompleted_courses(), grades);
-                                        c.get_completed_backlog_records(c.getCompleted_backlog_courses(), grades);
+                                        c.get_completed_records(c.getCompleted_courses(), c.getStudent_sgpa());
+                                        c.get_completed_backlog_records(c.getCompleted_backlog_courses(), c.getStudent_sgpa());
                                     }
                                     else if(s==14){
                                         System.out.print("Enter course name: ");
@@ -308,34 +306,34 @@ public class Main {
                                         String h = sc.next();
                                         System.out.println("Enter the semester number: ");
                                         int a = sc.nextInt();
-                                        c.get_CGPA_SGPA(total_students, grades, h, a);
+                                        c.get_CGPA_SGPA(total_students, h, a);
                                     }
                                     else if (s==7){
                                         System.out.print("Enter the name of the student: ");
                                         String h = sc.next();
                                         System.out.println("Enter the name of the course: ");
                                         String a = sc.next();
-                                        c.get_grades(total_students, grades, h, a);
+                                        c.get_grades(total_students, h, a);
                                     }
                                     else if (s==8){
                                         System.out.print("Enter the name of the student: ");
                                         String h = sc.next();
                                         System.out.println("Enter the name of the course: ");
                                         String a = sc.next();
-                                        c.change_completed_grades(total_students, grades, h, a);
-                                        c.renew_grades_lists(total_students, grades, h);
+                                        c.change_completed_grades(total_students, h, a);
+                                        c.renew_grades_lists(total_students, h);
                                     }
                                     else if (s==9){
                                         System.out.print("Enter the name of the student: ");
                                         String h = sc.next();
                                         System.out.println("Enter the name of the course: ");
                                         String a = sc.next();
-                                        c.set_grades(total_students, grades, h, a);
+                                        c.set_grades(total_students, h, a);
                                     }
                                     else if (s==10){
                                         System.out.print("Enter the name of the student: ");
                                         String h = sc.next();
-                                        c.change_semester(total_students, grades, h);
+                                        c.change_semester(total_students, h);
                                     }
                                     else if (s==11){
                                         System.out.print("Enter the name of the professor: ");

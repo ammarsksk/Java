@@ -64,7 +64,7 @@ public class admin extends user {
             System.out.println("The student doesn't exist. ");
         }
     }
-    public void get_CGPA_SGPA(ArrayList<student> arr, HashMap<courses, Float> hash, String name, int semester){
+    public void get_CGPA_SGPA(ArrayList<student> arr, String name, int semester){
         float sgpa = 0; int num = 0;
         float cgpa = 0; int num1 = 0;
         for (student c: arr){
@@ -73,9 +73,9 @@ public class admin extends user {
                     System.out.println("Cannot print SGPA or CGPA since there are no completed courses by this student. ");
                     return;
                 }
-                for(courses i : hash.keySet()){
+                for(courses i : c.getStudent_sgpa().keySet()){
                     if(i.getsemester() == semester){
-                        sgpa += hash.get(i);
+                        sgpa += c.getStudent_sgpa().get(i);
                         num++;
                     }
                 }
@@ -85,9 +85,9 @@ public class admin extends user {
                 sgpa = sgpa /num;
                 System.out.println("The SGPA of the student is: ");
                 System.out.println(sgpa);
-                for(courses i : hash.keySet()){
-                    if(hash.get(i)>=4){
-                        cgpa += hash.get(i);
+                for(courses i : c.getStudent_sgpa().keySet()){
+                    if(c.getStudent_sgpa().get(i)>=4){
+                        cgpa += c.getStudent_sgpa().get(i);
                         num1++;
                     }
                 }
@@ -97,15 +97,15 @@ public class admin extends user {
             }
         }
     }
-    public void get_grades(ArrayList<student> arr, HashMap<courses, Float> hash, String name, String course_name){
+    public void get_grades(ArrayList<student> arr, String name, String course_name){
         boolean flag1 = true; boolean flag2 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
                 flag1 = false;
-                for(courses i : hash.keySet()){
+                for(courses i : c.getStudent_sgpa().keySet()){
                     boolean a = c.getCompleted_courses().contains(i);
                     if(i.getcourse_name().equals(course_name) && a){
-                        System.out.println(hash.get(i));
+                        System.out.println(c.getStudent_sgpa().get(i));
                         flag2 = false;
                     }
                 }
@@ -119,7 +119,7 @@ public class admin extends user {
             System.out.println("The student has not completed this course yet.");
         }
     }
-    public void change_completed_grades(ArrayList<student> arr, HashMap<courses, Float> hash, String name, String course_name){
+    public void change_completed_grades(ArrayList<student> arr, String name, String course_name){
         boolean flag1 = true; boolean flag2 = true; boolean flag3 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
@@ -127,17 +127,17 @@ public class admin extends user {
                 System.out.println("Would you like to change a backlog or update a passed course (1 for backlog, 2 for passed course) --> ");
                 int a = sc.nextInt();
                 if (a==1){
-                    for(courses i : hash.keySet()){
-                        if(hash.get(i)<4 && i.getcourse_name().equals(course_name)){
-                            hash.replace(i, sc.nextFloat());
+                    for(courses i : c.getStudent_sgpa().keySet()){
+                        if(c.getStudent_sgpa().get(i)<4 && i.getcourse_name().equals(course_name)){
+                            c.getStudent_sgpa().replace(i, sc.nextFloat());
                             flag2 = false;
                         }
                     }
                 }
                 else if (a==2){
-                    for(courses i : hash.keySet()){
-                        if(hash.get(i)>=4 && i.getcourse_name().equals(course_name)){
-                            hash.replace(i, sc.nextFloat());
+                    for(courses i : c.getStudent_sgpa().keySet()){
+                        if(c.getStudent_sgpa().get(i)>=4 && i.getcourse_name().equals(course_name)){
+                            c.getStudent_sgpa().replace(i, sc.nextFloat());
                             flag3 = false;
                         }
                     }
@@ -152,35 +152,35 @@ public class admin extends user {
             System.out.println("The course wasn't found.");
         }
     }
-    public void renew_grades_lists(ArrayList<student> arr, HashMap<courses, Float> hash, String name){
+    public void renew_grades_lists(ArrayList<student> arr, String name){
         for (student c: arr){
             if(c.getName().equals(name)){
                 c.getCompleted_backlog_courses().clear();
-                for(courses i : hash.keySet()){
-                    if(hash.get(i)<4 && hash.get(i) != 0){
+                for(courses i : c.getStudent_sgpa().keySet()){
+                    if(c.getStudent_sgpa().get(i)<4 && c.getStudent_sgpa().get(i) != 0){
                         c.getCompleted_backlog_courses().add(i);
                     }
                 }
                 c.getCompleted_courses().clear();
-                for(courses i : hash.keySet()){
-                    if(hash.get(i)>=4 && hash.get(i) != 0){
+                for(courses i : c.getStudent_sgpa().keySet()){
+                    if(c.getStudent_sgpa().get(i)>=4 && c.getStudent_sgpa().get(i) != 0){
                         c.getCompleted_courses().add(i);
                     }
                 }
             }
         }
     }
-    public void set_grades(ArrayList<student> arr, HashMap<courses, Float> hash, String name, String course_name){
+    public void set_grades(ArrayList<student> arr, String name, String course_name){
         boolean flag1 = true; boolean flag2 = true;
         for (student c: arr){
             if (c.getName().equals(name)){
                 flag1 = false;
-                for(courses i: hash.keySet()){
+                for(courses i: c.getStudent_sgpa().keySet()){
                     if(i.getcourse_name().equals(course_name)){
                         flag2 = false;
                         System.out.println("Enter the new CGPA --> ");
                         float a = sc.nextFloat();
-                        hash.put(i, a);
+                        c.getStudent_sgpa().put(i, a);
                         if(a >= 4){
                             c.getCompleted_courses().add(i);
                         }
@@ -199,29 +199,29 @@ public class admin extends user {
             System.out.println("Course doesn't exist. ");
         }
     }
-    public void change_semester(ArrayList<student> arr, HashMap<courses, Float> hash, String name){
+    public void change_semester(ArrayList<student> arr, String name){
         boolean flag = false;
         boolean flag1 = true;
         for (student c: arr){
             if(c.getName().equals(name)){
                 flag1 = false;
-                for(courses i: hash.keySet()){
-                    if(hash.get(i) == 0){
+                for(courses i: c.getStudent_sgpa().keySet()){
+                    if(c.getStudent_sgpa().get(i) == 0){
                         System.out.println("There is a course which hasn't been graded yet!");
                         return;
                     }
-                    if(hash.get(i)>=4){
+                    if(c.getStudent_sgpa().get(i)>=4){
                         flag = true;
                     }
                 }
                 if (flag){
                     c.setCurrent_semester(c.getCurrent_semester() + 1);
                     System.out.println("The semester has been changed successfully, the current semester is: " + c.getCurrent_semester());
-                    for(courses i: hash.keySet()){
-                        if(hash.get(i) >= 4 && hash.get(i) != 0){
+                    for(courses i: c.getStudent_sgpa().keySet()){
+                        if(c.getStudent_sgpa().get(i) >= 4 && c.getStudent_sgpa().get(i) != 0){
                             c.getCompleted_courses().add(i);
                         }
-                        else if(hash.get(i) < 4 && hash.get(i) != 0){
+                        else if(c.getStudent_sgpa().get(i) < 4 && c.getStudent_sgpa().get(i) != 0){
                             c.getCompleted_backlog_courses().add(i);
                         }
                     }
