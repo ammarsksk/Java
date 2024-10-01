@@ -1,6 +1,6 @@
-The code works in the following manner -->                                                                                                                                 ^
-                                                                                                                                                                           |
-The code first asks the user to login or signup, there are already 3 students, 2 professors and 1 admin hard coded.                                                 Press this button to run code.
+The code works in the following manner -->
+
+The code first asks the user to login or signup, there are already 3 students, 2 professors and 1 admin hard coded.
 The user can further sign in 3 more students, 2 more professors and 1 more admin.
 
 After selecting the appropriate option, the code proceeds to give you the choice of selecting between student, professor, and admin.

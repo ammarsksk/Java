@@ -43,16 +43,21 @@ public class Main {
         ArrayList<admin> admins = new ArrayList<admin>(){{
             add(a1);
         }};
+        TA ta1 = new TA("gaurav@gmail.com", "1234", "Gaurav", 2023219);
+        ArrayList<TA> TAs = new ArrayList<TA>(){{
+            add(ta1);
+        }};
         while (true){
             System.out.println("Enter --> \n1 - Login \n2 - Sign Up \n3 - Exit");
             int x = sc.nextInt();
             if (x == 1){
-                System.out.println("Enter the number: \n1) Student \n2) Professor \n3) Admin \n4) Exit");
+                System.out.println("Enter the number: \n1) Student \n2) Professor \n3) Admin \n4) TA \n5) Exit");
                 int z = sc.nextInt();
 
                 boolean flag1 = false;
                 boolean flag2 = false;
                 boolean flag3 = false;
+                boolean flag4 = false;
                 System.out.print("Enter Email: ");
                 String eml = sc.next();
                 for (student s: total_students){
@@ -73,7 +78,13 @@ public class Main {
                         break;
                     }
                 }
-                if(!flag1 && !flag2 && !flag3){
+                for (TA t: TAs){
+                    if (t.getEmail().equals(eml)){
+                        flag4= true;
+                        break;
+                    }
+                }
+                if(!flag1 && !flag2 && !flag3 && !flag4){
                     System.out.println("Email does not exist! ");
                     continue;
                 }
@@ -262,7 +273,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9)Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor. \n12)View the complaints for a student (in sorted order - oldest --> newest). \n13)Resolution for all the complaints of a student. \n14)Delete the complaints (after resolution)");
+                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9)Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor. \n12)View the complaints for a student (in sorted order - oldest --> newest). \n13)Resolution for all the complaints of a student. \n14)Delete the complaints (after resolution) \n15)Set TA courses");
                                     int s = sc.nextInt();
                                     if (s==1){
                                         c.view_course_catalog(available_courses);
@@ -359,6 +370,13 @@ public class Main {
                                         String h = sc.next();
                                         c.delete_student_complaints(total_students, h);
                                     }
+                                    else if(s==15){
+                                        System.out.print("Enter the name of the TA: ");
+                                        String h = sc.next();
+                                        System.out.print("Enter the name of the course: ");
+                                        String d = sc.next();
+                                        c.set_TA_courses(TAs, available_courses, h, d);
+                                    }
                                 }
                                 else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){
                                     break;
@@ -374,6 +392,138 @@ public class Main {
                     }
                 }
                 else if(z==4){
+                    System.out.print("Enter the password: ");
+                    String passw = sc.next();
+                    for(TA c: TAs) {
+                        if (c.getEmail().equals(eml) && c.getPassword().equals(passw)) {
+                            System.out.println("You have logged in! ");
+                            while(true){
+                                System.out.print("Do you want to continue y/n: ");
+                                String f = sc.next();
+                                if (Objects.equals(f, "y") || Objects.equals(f, "Y")){
+                                    System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status. \n17)Get office hours \n ------------------------------ \n18)Get student grades \n19)Set student grades (grade not yet assigned) \n20)Change completed grade \n21)See courses managed by you. \n22)See students under you.");
+                                    int s = sc.nextInt();
+                                    if(s==1){
+                                        c.getregisteredcourses(c.getRegistered_courses());
+                                    }
+                                    else if(s==2){
+                                        c.getavailablecourses(available_courses, c.getStudent_sgpa(), c.getCurrent_semester());
+                                        System.out.println();
+                                    }
+                                    else if(s==3){
+                                        c.calculateCGPA(c.getStudent_sgpa());
+                                        System.out.println();
+                                    }
+                                    else if(s==4){
+                                        System.out.print("Enter semester number: ");
+                                        int p = sc.nextInt();
+                                        c.calculateSGPA(c.getStudent_sgpa(), p);
+                                        System.out.println();
+                                    }
+                                    else if(s==5){
+                                        c.make_registered_courses(available_courses, c.getRegistered_courses(), c, c.getStudent_sgpa(), c.getCurrent_semester());
+                                        System.out.println();
+                                    }
+                                    else if(s==6){
+                                        System.out.println("Drop options are -->: ");
+                                        for(courses o: c.getRegistered_courses()){
+                                            System.out.println(o.getcourse_name());
+                                        }
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.dropcourses(c.getRegistered_courses(),h, c);
+                                    }
+                                    else if(s==7){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.getcoursecode(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==8){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.getprofname(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==9){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.getcoursecredits(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==10){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.getcourseprereqs(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==11){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.get_weekly_schedule(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==12){
+                                        System.out.println(c.getCurrent_semester());
+                                    }
+                                    else if(s==13){
+                                        c.get_completed_records(c.getCompleted_courses(), c.getStudent_sgpa());
+                                        c.get_completed_backlog_records(c.getCompleted_backlog_courses(), c.getStudent_sgpa());
+                                    }
+                                    else if(s==14){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.get_course_syllabus(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==15){
+                                        c.set_complaint(c.getStudent_complaints());
+                                    }
+                                    else if(s==16){
+                                        c.view_complaints(c.getStudent_complaints());
+                                    }
+                                    else if(s==17){
+                                        System.out.print("Enter course name: ");
+                                        String h = sc.next();
+                                        c.get_office_hours(c.getRegistered_courses(),h);
+                                    }
+                                    else if(s==18){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        System.out.println("Enter the name of the course: ");
+                                        String a = sc.next();
+                                        c.get_grades(total_students, h, a);
+                                    }
+                                    else if(s==19){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        System.out.println("Enter the name of the course: ");
+                                        String a = sc.next();
+                                        c.set_grades(total_students, h, a);
+                                    }
+                                    else if(s==20){
+                                        System.out.print("Enter the name of the student: ");
+                                        String h = sc.next();
+                                        System.out.println("Enter the name of the course: ");
+                                        String a = sc.next();
+                                        c.change_completed_grades(total_students, h, a);
+                                        c.renew_grades_lists(total_students, h);
+                                    }
+                                    else if(s==21){
+                                        c.get_courses(c.getTA_Courses());
+                                    }
+                                    else if (s==22){
+                                        c.get_students_under(c.getTA_Courses());
+                                    }
+                                }
+                                else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Please enter the correct command");
+                                }
+                            }
+                        }
+                        else if (!c.getPassword().equals(passw)){
+                            System.out.println("Enter correct password! ");
+                        }
+                    }
+                }
+                else if(z==5){
                     break;
                 }
                 else{
@@ -468,6 +618,5 @@ public class Main {
                 System.out.println("Please Enter the correct command! ");
             }
         }
-
     }
 }

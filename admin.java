@@ -1,12 +1,32 @@
 package Java;
 import java.util.*;
 
-public class admin extends user {
+public class admin extends user implements TAxAdmin {
     Scanner sc = new Scanner(System.in);
     public admin(String email) {
         super(email);
     }
-
+    public void set_TA_courses(ArrayList<TA> arr1, ArrayList<courses> arr2, String name, String course_name){
+        boolean flag1 = true; boolean flag2 = true;
+        for (TA t: arr1){
+            if(t.getName().equals(name)){
+                flag1 = false;
+                for (courses c: arr2){
+                    if(c.getcourse_name().equals(course_name)){
+                        flag2 = false;
+                        t.getTA_Courses().add(c);
+                    }
+                }
+            }
+        }
+        if(flag1){
+            System.out.println("TA doesn't exist! ");
+            return;
+        }
+        if(flag2){
+            System.out.println("The course doesn't exist! ");
+        }
+    }
     public void view_course_catalog(ArrayList<courses> arr){
         for (courses c : arr){
             System.out.println(c.getcourse_name() + " - " + c.getcourse_code());
