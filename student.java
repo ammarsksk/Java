@@ -77,6 +77,15 @@ public class student extends user implements course_catalog{
             cred_limit += c.getcredits();
         }
         for (courses c: arr1){
+            try {
+                if(c.getEnrolled_students().size()>=c.getEnrollment_limit()){
+                    throw new CourseFullException("The course " + c.getcourse_name() + " is full, and cannot be added ");
+                }
+            }
+            catch(CourseFullException e){
+                System.out.println(e.getMessage());
+                continue;
+            }
             if (c.getsemester() == semester && has_passed(hash, c.getprereqs()) && !has_registered(arr2, c.getcourse_name()) && cred_limit<20){
                 System.out.println("This is a course which you can apply for: " + c.getcourse_name());
                 System.out.print("Enter y or n --> y to apply, n to reject: ");
