@@ -1,5 +1,8 @@
 package Java;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class admin extends user implements TAxAdmin {
     Scanner sc = new Scanner(System.in);
@@ -350,6 +353,28 @@ public class admin extends user implements TAxAdmin {
                     }
                 });
             }
+        }
+    }
+    public void set_deadline(String course_name, ArrayList<courses> arr){
+        boolean flag = true;
+        for(courses c: arr){
+            if(c.getcourse_name().equals(course_name)){
+                flag = false;
+                System.out.println("Enter the year: ");
+                int a = sc.nextInt();
+                System.out.println("Enter the month: ");
+                int b = sc.nextInt();
+                System.out.println("Enter the date: ");
+                int d = sc.nextInt();
+                System.out.println("Enter the hour (24 hr clock): ");
+                int f = sc.nextInt();
+                System.out.println("Enter the minutes: ");
+                int g = sc.nextInt();
+                c.deadline = LocalDateTime.of(a,b,d,f,g,0);
+            }
+        }
+        if(flag){
+            System.out.println("Course doesn't exist! ");
         }
     }
 }

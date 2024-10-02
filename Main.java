@@ -276,7 +276,7 @@ public class Main {
                                 System.out.print("Do you want to continue y/n: ");
                                 String f = sc.next();
                                 if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9)Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor. \n12)View the complaints for a student (in sorted order - oldest --> newest). \n13)Resolution for all the complaints of a student. \n14)Delete the complaints (after resolution) \n15)Set TA courses");
+                                    System.out.println("Enter --> \n1)View the course catalog \n2)Add a course to the course catalog \n3)Delete a course from the catalog. \n4)View student records \n5)Update student records \n6)Get CGPA and SGPA of a student \n7)Get grades of a particular course \n8)Change the grades of a course which is completed. \n9)Set the grades of an ongoing course \n10)Promote the student to the next semester. \n11)Assign a course to a professor. \n12)View the complaints for a student (in sorted order - oldest --> newest). \n13)Resolution for all the complaints of a student. \n14)Delete the complaints (after resolution) \n15)Set TA courses \n16)Set deadline for a course");
                                     int s = sc.nextInt();
                                     if (s==1){
                                         c.view_course_catalog(available_courses);
@@ -379,6 +379,11 @@ public class Main {
                                         System.out.print("Enter the name of the course: ");
                                         String d = sc.next();
                                         c.set_TA_courses(TAs, available_courses, h, d);
+                                    }
+                                    else if(s==16){
+                                        System.out.print("Enter the name of the course: ");
+                                        String d = sc.next();
+                                        c.set_deadline(d, available_courses);
                                     }
                                 }
                                 else if((Objects.equals(f, "n")) || Objects.equals(f, "N")){

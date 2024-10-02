@@ -1,6 +1,9 @@
 package Java;
 
 import java.util.ArrayList;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 
 public class courses {
     private String course_name;
@@ -18,6 +21,7 @@ public class courses {
     private String locations;
     private ArrayList<student> enrolled_students = new ArrayList<student>();
     private int enrollment_limit;
+    LocalDateTime deadline;
 
     public courses(String course_name, String course_code, int semester, String professor_name, int credits, String syllabus, String locations, String prereqs,int slot, int enrollment_limit) {
         this.course_name = course_name;

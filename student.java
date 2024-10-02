@@ -1,8 +1,11 @@
 package Java;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class student extends user implements course_catalog{
     Scanner sc = new Scanner (System.in);
@@ -144,12 +147,22 @@ public class student extends user implements course_catalog{
         boolean flag = true;
         for (courses c: arr){
             if(c.getcourse_name().equals(name)){
+                try{
+                    if(LocalDateTime.now().isAfter(c.deadline)){
+                        throw new DropDeadlinePassedException("The drop deadline for the course has passed. ");
+                    }
+                }
+                catch (DropDeadlinePassedException e){
+                    System.out.println(e.getMessage());
+                    return;
+                }
                 flag = false;
                 c.getEnrolled_students().removeIf(d -> d.getName().equals(s.getName()));
             }
         }
         if(flag){
             System.out.println("The course doesn't exist or student hasn't registered! ");
+            return;
         }
         arr.removeIf(c -> c.getcourse_name().equals(name));
     }
