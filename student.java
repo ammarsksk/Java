@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.HashMap;
-import java.time.LocalTime;
-import java.time.LocalDate;
 
 public class student extends user implements course_catalog{
     Scanner sc = new Scanner (System.in);
@@ -14,10 +12,10 @@ public class student extends user implements course_catalog{
     private int current_semester = 1; // DEFAULT VALUE
 
     private HashMap<courses, Float> student_sgpa = new HashMap<courses, Float>();
-    private ArrayList<complaints> student_complaints = new ArrayList<complaints>();;
-    private ArrayList<courses> completed_backlog_courses = new ArrayList<courses>();;
-    private ArrayList<courses> registered_courses = new ArrayList<courses>();;
-    private ArrayList<courses> completed_courses = new ArrayList<courses>();;
+    private ArrayList<complaints> student_complaints = new ArrayList<complaints>();
+    private ArrayList<courses> completed_backlog_courses = new ArrayList<courses>();
+    private ArrayList<courses> registered_courses = new ArrayList<courses>();
+    private ArrayList<courses> completed_courses = new ArrayList<courses>();
 
     public student(String email, String password, String name, int roll_no){
         super(email, password);
@@ -278,6 +276,41 @@ public class student extends user implements course_catalog{
             for (complaints c : arr) {
                 System.out.println(c.getComplaint() + " - " + c.getDateTime() + " | Status is: " + c.getStatus());
             }
+        }
+    }
+    public void add_feedback(ArrayList<courses> arr, String course_name){
+        boolean flag = true;
+        for (courses c: arr){
+            if(c.getcourse_name().equals(course_name)){
+                flag = false;
+                System.out.println("Enter which type of feedback to give --> \n1)Rating(1-5) \n2)Comment \n3)Rating(1.00 - 5.00)");
+                int a = sc.nextInt();
+                if(a == 1){
+                    System.out.println("Enter the rating: ");
+                    int b = sc.nextInt();
+                    Feedback<Integer> feed = new Feedback<Integer>(b);
+                    c.getInt_feedback().add(feed);
+                }
+                else if(a == 2){
+                    System.out.println("Enter the comment: ");
+                    sc.nextLine();
+                    String b = sc.nextLine();
+                    Feedback<String> feed = new Feedback<String>(b);
+                    c.getString_feedback().add(feed);
+                }
+                else if(a == 3){
+                    System.out.println("Enter the rating (with decimals): ");
+                    double b = sc.nextDouble();
+                    Feedback<Double> feed = new Feedback<Double>(b);
+                    c.getDouble_feedback().add(feed);
+                }
+                else{
+                    System.out.println("Enter correct command please! ");
+                }
+            }
+        }
+        if(flag){
+            System.out.println("The student has no such course under him/ The course doesn't exist! ");
         }
     }
 

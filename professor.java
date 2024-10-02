@@ -134,7 +134,34 @@ public class professor extends user {
             }
         }
     }
-
+    public void view_feedback(ArrayList<courses> arr, String course_name){
+        boolean flag = true;
+        if(arr.isEmpty()){
+            System.out.println("There are no courses under this prof! ");
+            return;
+        }
+        for (courses c: arr){
+            if(c.getcourse_name().equals(course_name)){
+                flag = false;
+                if(c.getInt_feedback().isEmpty() && c.getString_feedback().isEmpty() && c.getDouble_feedback().isEmpty()){
+                    System.out.println("There are no feedbacks! ");
+                    return;
+                }
+                for(Feedback<Integer> T: c.getInt_feedback()){
+                    System.out.println("Rating (out of 5) : " + T.getFeedback());
+                }
+                for(Feedback<String> T: c.getString_feedback()){
+                    System.out.println("Comment: " + T.getFeedback());
+                }
+                for(Feedback<Double> T: c.getDouble_feedback()){
+                    System.out.println("Rating (out of 5.0): " + T.getFeedback());
+                }
+            }
+        }
+        if(flag){
+            System.out.println("This course is not under this prof! ");
+        }
+    }
     public String getName() {
         return name;
     }

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-
 public class Main {
     public static void validate_student_password(String password, student c) throws InvalidLoginException{
         if(!password.equals(c.getPassword())){
@@ -125,7 +124,7 @@ public class Main {
                                     System.out.print("Do you want to continue y/n: ");
                                     String f = sc.next();
                                     if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                        System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status. \n17)Get office hours");
+                                        System.out.println("Enter --> \n1)Get registered courses \n2)Get available courses (for your current semester) \n3)Calculate CGPA \n4)Calculate SGPA (for any completed semester) \n5)Apply for courses \n6)Drop courses \n7)Get course code \n8)Get prof name \n9)Get course credits \n10)Get course prerequisites \n11)Get weekly schedule (for particular course) \n12)Get the current semester you are on \n13)Get the completed passed and failed courses. \n14)Get course syllabus. \n15)Register a complaint \n16)View all your complaints and their status. \n17)Get office hours \n18)Give feedback for a course");
                                         int s = sc.nextInt();
                                         if (s == 1) {
                                             c.getregisteredcourses(c.getRegistered_courses());
@@ -189,6 +188,11 @@ public class Main {
                                             String h = sc.next();
                                             c.get_office_hours(c.getRegistered_courses(), h);
                                         }
+                                        else if(s==18){
+                                            System.out.print("Enter course name: ");
+                                            String h = sc.next();
+                                            c.add_feedback(c.getRegistered_courses(), h);
+                                        }
                                     } else if ((Objects.equals(f, "n")) || Objects.equals(f, "N")) {
                                         break;
                                     } else {
@@ -213,7 +217,7 @@ public class Main {
                                     System.out.print("Do you want to continue y/n: ");
                                     String f = sc.next();
                                     if (Objects.equals(f, "y") || Objects.equals(f, "Y")) {
-                                        System.out.println("Enter --> \n1)Change syllabus for a course \n2)Update timings for a particular course. \n3)Update the enrollment limit for a course \n4)Update the credits for a course \n5)Update the prerequisites for a course \n6)View enrolled students for a particular course, \n7)Update office hours for a particular course. \n8)Update the days of a course. \n9)View the courses under you. ");
+                                        System.out.println("Enter --> \n1)Change syllabus for a course \n2)Update timings for a particular course. \n3)Update the enrollment limit for a course \n4)Update the credits for a course \n5)Update the prerequisites for a course \n6)View enrolled students for a particular course, \n7)Update office hours for a particular course. \n8)Update the days of a course. \n9)View the courses under you. \n10)View Feedback of a course");
                                         int s = sc.nextInt();
                                         if (s == 1) {
                                             System.out.print("Enter course name: ");
@@ -251,6 +255,10 @@ public class Main {
                                         } else if (s == 9) {
                                             c.view_courses(c.getCourses_under());
                                             System.out.println();
+                                        } else if(s==10){
+                                            System.out.print("Enter course name: ");
+                                            String h = sc.next();
+                                            c.view_feedback(c.getCourses_under(), h);
                                         }
                                     } else if ((Objects.equals(f, "n")) || Objects.equals(f, "N")) {
                                         break;
@@ -286,8 +294,10 @@ public class Main {
                                         String course_name = sc.next();
                                         String course_code = sc.next();
                                         int semester = sc.nextInt();
+                                        sc.nextLine();
                                         String professor_name = sc.next();
                                         int credits = sc.nextInt();
+                                        sc.nextLine();
                                         String syllabus = sc.nextLine();
                                         String locations = sc.next();
                                         String prereqs = sc.next();

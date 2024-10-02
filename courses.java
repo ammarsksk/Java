@@ -1,9 +1,7 @@
 package Java;
 
 import java.util.ArrayList;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
-
 
 public class courses {
     private String course_name;
@@ -22,6 +20,9 @@ public class courses {
     private ArrayList<student> enrolled_students = new ArrayList<student>();
     private int enrollment_limit;
     LocalDateTime deadline;
+    private ArrayList<Feedback<Integer>> int_feedback = new ArrayList<Feedback<Integer>>();
+    private ArrayList<Feedback<String>> string_feedback = new ArrayList<Feedback<String>>();
+    private ArrayList<Feedback<Double>> double_feedback = new ArrayList<Feedback<Double>>();
 
     public courses(String course_name, String course_code, int semester, String professor_name, int credits, String syllabus, String locations, String prereqs,int slot, int enrollment_limit) {
         this.course_name = course_name;
@@ -157,5 +158,29 @@ public class courses {
 
     public void setOffice_hours(String office_hours) {
         this.office_hours = office_hours;
+    }
+
+    public ArrayList<Feedback<Integer>> getInt_feedback() {
+        return int_feedback;
+    }
+
+    public void setInt_feedback(ArrayList<Feedback<Integer>> int_feedback) {
+        this.int_feedback = int_feedback;
+    }
+
+    public ArrayList<Feedback<String>> getString_feedback() {
+        return string_feedback;
+    }
+
+    public void setString_feedback(ArrayList<Feedback<String>> string_feedback) {
+        this.string_feedback = string_feedback;
+    }
+
+    public ArrayList<Feedback<Double>> getDouble_feedback() {
+        return double_feedback;
+    }
+
+    public void setDouble_feedback(ArrayList<Feedback<Double>> double_feedback) {
+        this.double_feedback = double_feedback;
     }
 }
