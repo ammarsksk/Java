@@ -5,6 +5,42 @@ import java.util.Scanner;
 
 
 public class Main {
+    public static void validate_password(String eml, String password, student c) throws InvalidLoginException{
+        if(eml.equals(c.getEmail()) && password.equals(c.getPassword())){
+            throw new InvalidLoginException("The password is incorrect! ");
+        }
+    }
+    public static void validateEmail(String eml, ArrayList<student> total_students, ArrayList<professor> total_professors, ArrayList<admin> admins, ArrayList<TA> TAs) throws InvalidLoginException {
+        boolean emailFound = false;
+
+        for (student s : total_students) {
+            if (s.getEmail().equals(eml)) {
+                emailFound = true;
+                break;
+            }
+        }
+        for (professor p : total_professors) {
+            if (p.getEmail().equals(eml)) {
+                emailFound = true;
+                break;
+            }
+        }
+        for (admin a : admins) {
+            if (a.getEmail().equals(eml)) {
+                emailFound = true;
+                break;
+            }
+        }
+        for (TA t : TAs) {
+            if (t.getEmail().equals(eml)) {
+                emailFound = true;
+                break;
+            }
+        }
+        if (!emailFound) {
+            throw new InvalidLoginException("Email does not exist!");
+        }
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);
         courses c11 = new courses("IP", "CSE_101", 1,"Bijendra Nath Jain", 4, "Python", "C101", "NULL", 1, 600);
@@ -53,39 +89,13 @@ public class Main {
             if (x == 1){
                 System.out.println("Enter the number: \n1) Student \n2) Professor \n3) Admin \n4) TA \n5) Exit");
                 int z = sc.nextInt();
-
-                boolean flag1 = false;
-                boolean flag2 = false;
-                boolean flag3 = false;
-                boolean flag4 = false;
                 System.out.print("Enter Email: ");
                 String eml = sc.next();
-                for (student s: total_students){
-                    if (s.getEmail().equals(eml)){
-                        flag1= true;
-                        break;
-                    }
+                try {
+                    validateEmail(eml, total_students, total_professors, admins, TAs);
                 }
-                for (professor p: total_professors){
-                    if (p.getEmail().equals(eml)){
-                        flag2 = true;
-                        break;
-                    }
-                }
-                for (admin a: admins){
-                    if (a.getEmail().equals(eml)){
-                        flag3 = true;
-                        break;
-                    }
-                }
-                for (TA t: TAs){
-                    if (t.getEmail().equals(eml)){
-                        flag4= true;
-                        break;
-                    }
-                }
-                if(!flag1 && !flag2 && !flag3 && !flag4){
-                    System.out.println("Email does not exist! ");
+                catch (InvalidLoginException e) {
+                    System.out.println(e.getMessage());
                     continue;
                 }
                 if (z==1){
@@ -187,7 +197,7 @@ public class Main {
                                 }
                             }
                         }
-                        else if (!c.getPassword().equals(passw)){
+                        else if (!c.getPassword().equals(passw) && c.getEmail().equals(eml)){
                             System.out.println("Enter correct password! ");
                         }
                     }
