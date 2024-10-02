@@ -97,7 +97,7 @@ public class admin extends user implements TAxAdmin {
                     return;
                 }
                 for(courses i : c.getStudent_sgpa().keySet()){
-                    if(i.getsemester() == semester){
+                    if(i.getsemester() == semester && !(c.getStudent_sgpa().get(i) == 0)){
                         sgpa += c.getStudent_sgpa().get(i);
                         num++;
                     }

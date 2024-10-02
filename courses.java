@@ -19,7 +19,7 @@ public class courses {
     private String locations;
     private ArrayList<student> enrolled_students = new ArrayList<student>();
     private int enrollment_limit;
-    LocalDateTime deadline;
+    LocalDateTime deadline = LocalDateTime.of(2024, 12, 31, 23, 59, 59);
     private ArrayList<Feedback<Integer>> int_feedback = new ArrayList<Feedback<Integer>>();
     private ArrayList<Feedback<String>> string_feedback = new ArrayList<Feedback<String>>();
     private ArrayList<Feedback<Double>> double_feedback = new ArrayList<Feedback<Double>>();
