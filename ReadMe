@@ -1,0 +1,16 @@
+Generic Programming -->
+
+    This code incorporates generic programming by using the Feedback class, and giving it a type T parameter, which can be changed upon instantiation of the feedback object.
+    using this feedback, I have made arrays of different types, for different types of feedbacks.
+
+Object classes -->
+
+    Object classes refer to those classes of which we can make objects. My TA class is an object class, which can be instantiated into a TA object, with methods and attributes of its own.
+
+Exception handling -->
+
+    1) Login exception -->
+
+        a) The "InvalidLoginException" class was created for this reason, to check for any exceptions in the login page, especially to check if email doesn't exist or if email already exists, or if password is incorrect.
+        b) The "CourseFullException" checks if the enrollment limit of the course has been reached, and cannot add any more students to the course.
+        c) The "DropDeadlinePassedException" checks if the deadline for dropping the course has been reached or not, and prevents students from dropping the course.

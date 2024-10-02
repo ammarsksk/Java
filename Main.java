@@ -532,26 +532,25 @@ public class Main {
                 boolean flag = true;
                 System.out.print("Enter new Email: ");
                 String eml = sc.next();
-
-                for (student s: total_students){
-                    if (s.getEmail().equals(eml)){
-                        System.out.println("Email already exists! ");
-                        flag = false;
+                try {
+                    for (student s : total_students) {
+                        if (s.getEmail().equals(eml)) {
+                            throw new InvalidLoginException("Email already exists!");
+                        }
+                    }
+                    for (professor p : total_professors) {
+                        if (p.getEmail().equals(eml)) {
+                            throw new InvalidLoginException("Email already exists!");
+                        }
+                    }
+                    for (admin a : admins) {
+                        if (a.getEmail().equals(eml)) {
+                            throw new InvalidLoginException("Email already exists!");
+                        }
                     }
                 }
-                for (professor p: total_professors){
-                    if (p.getEmail().equals(eml)){
-                        System.out.println("Email already exists! ");
-                        flag = false;
-                    }
-                }
-                for (admin a: admins){
-                    if (a.getEmail().equals(eml)){
-                        System.out.println("Email already exists! ");
-                        flag = false;
-                    }
-                }
-                if (!flag){
+                catch(InvalidLoginException e){
+                    System.out.println(e.getMessage());
                     continue;
                 }
                 System.out.println("Enter the number: \n1) Student \n2) Professor \n3) Admin \n4) Exit");
